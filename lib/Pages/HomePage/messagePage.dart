@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_controller.dart';
+import 'package:planet_saver/FireBase/ChatsFireBase.dart';
+import 'package:planet_saver/Models/MessageViewModel.dart';
+import 'package:planet_saver/Models/user_model.dart';
 
+import '../../Controllers/user_statemanager.dart';
 import '../Widgets/colors.dart';
-class MessageScreen extends StatelessWidget {
-  const MessageScreen({Key? key}) : super(key: key);
+class MessageScreen extends StatefulWidget {
+  MessageScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MessageScreen> createState() => _MessageScreenState();
+}
+
+class _MessageScreenState extends State<MessageScreen> {
+  final user=Get.find<UserStateController>();
+
+  MessagingService messagingService=MessagingService();
+  UserController userController=UserController();
+  Future<UserModel?> returnUser(String id) async {
+    UserController userController = UserController();
+    UserModel? userModel = await userController.getCurrentUser(id);
+    return userModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,54 +41,97 @@ class MessageScreen extends StatelessWidget {
         Expanded(
             flex: 11,
             child: Container(
-              child: ListView.builder(
-                  itemCount: 10,
+              child: StreamBuilder<List<MessageView>>(
+                  stream:messagingService.fetchUserChats(user.currentser.value!.uid),
+                  builder: (context,snapShot){
+                    print(user.currentser.value!.uid);
+                    print("stops here");
+                    if(snapShot.connectionState==ConnectionState.waiting){
+                      return Center(
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    if (!snapShot.hasData || snapShot.data!.isEmpty) {
+                      return Center(child: Text('No chats available'));
+                    }
+                    if (snapShot.hasError) {
+                      return Center(child: Text('Error: ${snapShot.error}'));
+                    }
+                    print("to here");
+                    for(var a in snapShot.data!){
+                      print(a.lastMessage);
+                    }
+                    final chats = snapShot.data!;
+                return ListView.builder(
+                  itemCount: chats.length,
                   itemBuilder: (context,index){
-                return Container(
-                  height: 80,
-                  child:Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                shape: BoxShape.circle
-                            ),
-                            child: Image.asset("images/profilePicture.jpg",fit: BoxFit.contain,),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                   /* UserModel? user=await userController.getCurrentUser(chats[index].to);*/
+                    String id=user.currentser.value!.uid==chats[index].from?chats[index].to:chats[index].from;
+                    return FutureBuilder<UserModel?>(
+                      future: returnUser(id),
+                      builder: (context,userSnapshot) {
+                        if (userSnapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+                        if (!userSnapshot.hasData || userSnapshot.data == null) {
+                          return Text('User data not available');
+                        }
+
+                        var otherUser = userSnapshot.data!;
+                        return Container(
+                          height: 80,
+                          child:Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              messageHeading("Max Spayne"),
-                              messageSubTxt("Buyer")
-                            ],
-                          ),
-                          const SizedBox(width: 40,),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              messageTxt("Hello World"),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                        color: Colors.yellow,
+                                        shape: BoxShape.circle
+                                    ),
+                                    child: Image.asset("images/profilePicture.jpg",fit: BoxFit.contain,),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      messageHeading(otherUser.name),
+                                      messageSubTxt(chats[index].lastMessage)
+                                    ],
+                                  ),
+                                  const SizedBox(width: 40,),
+                                  /*Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      messageTxt("Hello World"),
+                                    ],
+                                  )*/
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Container(height: 0.6,color: Colors.black,)
                             ],
                           )
-                        ],
-                      ),
-                      const SizedBox(height: 10,),
-                      Container(height: 0.6,color: Colors.black,)
-                    ],
-                  )
+                        );
+                      }
+                    );
+                  }
                 );
               }),
             ))
       ],
     );
   }
+
   Text messageTxt(String value) {
     return Text(value,style: TextStyle(
       fontSize: 20,
@@ -76,6 +140,7 @@ class MessageScreen extends StatelessWidget {
       fontWeight: FontWeight.normal
     ),);
   }
+
   Text messageHeading(String value) {
     return Text(value,style: TextStyle(
       fontSize: 20,
@@ -84,6 +149,7 @@ class MessageScreen extends StatelessWidget {
       fontWeight: FontWeight.bold
     ),);
   }
+
   Text messageSubTxt(String value) {
     return Text(value,style: TextStyle(
       fontSize: 15,

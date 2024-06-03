@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
-import 'package:planet_saver/DummyData/dummyProucts.dart';
 import 'package:planet_saver/FireBase/ads_storage.dart';
 import 'package:planet_saver/Pages/DescriptionPage/DescriptionPage.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';

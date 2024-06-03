@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/FireBase/ChatsFireBase.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 
-import '../../DummyData/dummyProucts.dart';
+
 import '../../Models/Product.dart';
 class DescriptionPage extends StatelessWidget {
-  const DescriptionPage({Key? key, required this.product}) : super(key: key);
+   DescriptionPage({Key? key, required this.product}) : super(key: key);
   final Product product;
+  final MessagingService messagingService=MessagingService();
+  final user=Get.find<UserStateController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,26 +32,37 @@ class DescriptionPage extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.white
               ),),
-            Container(
-              height: 50,
-              width: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: primaryColor
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.shopping_cart,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  Text("Inquire",style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500
-                  ),)
-                ],
+            InkWell(
+              onTap: (){
+                messagingService.createFirstMessage(
+                    user.currentser.value!.uid,
+                    product.uid,
+                    "Making Inquiry on ${product.tittle}",
+                    true
+                );
+                print("message sent");
+              },
+              child: Container(
+                height: 50,
+                width: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: primaryColor
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.shopping_cart,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    Text("Inquire",style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500
+                    ),)
+                  ],
+                ),
               ),
             )
           ],

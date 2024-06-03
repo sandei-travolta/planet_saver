@@ -4,7 +4,7 @@ class ChartModel{
   final String from;
   final String to;
   final String message;
-  final String dateStamp;
+  final Timestamp dateStamp;
   final bool inquiry;
 
   ChartModel(
@@ -20,7 +20,7 @@ class ChartModel{
     "from":from,
     "to":to,
     "message":message,
-    "dateStamp":dateStamp,
+    "dateStamp":FieldValue.serverTimestamp(),
     "inquiry":inquiry
   };
   static ChartModel fromSnap(DocumentSnapshot snapshot){
