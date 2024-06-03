@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_controller.dart';
 import 'package:planet_saver/Pages/LoginPage.dart';
 import 'package:planet_saver/Pages/LoginPage/registrationFom2.dart';
@@ -23,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passWordController=TextEditingController();
   TextEditingController confirmPassWordController=TextEditingController();
   int _currentPage=0;
+  bool isLoading=false;
   @override
   Widget build(BuildContext context) {
     List _forms=[
@@ -86,17 +88,32 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: 80,
                         ),
                         _currentPage==1?InkWell(
-                          onTap: ()=>_userController.registerUser(nameController.text, emailController.text, passWordController.text,contactController.text, locationController.text, context),
-                          child: Container(
+                          onTap: (){
+                            setState(() {
+                              isLoading=true;
+                            });
+                            _userController.registerUser(nameController.text, emailController.text, passWordController.text,contactController.text, locationController.text, context);
+                            setState(() {
+                              isLoading=false;
+                            });
+                            },
+                            child: Container(
                             height: 40,
                             width: 120,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              color: primaryColorV2,
+                            borderRadius: BorderRadius.circular(12),
+                            color: primaryColorV2,
                             ),
                             child: Center(
-                              child: Text(
-                                "Submit",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w700),
+                            child: isLoading==false?Text(
+                            "Submit",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w700),
+                            ):Center(
+                            child: Container
+                              (
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             ),
                           ),

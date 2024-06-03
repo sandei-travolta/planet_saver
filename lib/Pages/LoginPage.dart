@@ -10,13 +10,25 @@ import 'package:planet_saver/Pages/Widgets/textWidgets.dart';
 import '../Controllers/user_controller.dart';
 import '../Controllers/user_statemanager.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   UserController _userController=UserController();
+
   TextEditingController emailController=TextEditingController();
+
   TextEditingController passwordController=TextEditingController();
+
   final userStateController =Get.find<UserStateController>();
-  bool isVisible=false;
+
+  bool isVisible=true;
+  bool isLoading=false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +106,14 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(height: 20,),
                         InkWell(
                           onTap:()async {
+                            setState(() {
+                              isLoading=true;
+                            });
                             UserModel? userModel=await _userController.loginUser(emailController.text, passwordController.text);
                             userStateController.setCur(userModel!);
+                            setState(() {
+                              isLoading=false;
+                            });
                             if(userModel!=null)
                               Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
                           },
@@ -107,7 +125,16 @@ class LoginPage extends StatelessWidget {
                               color: primaryColorV2
                             ),
                             child: Center(
-                              child: Text("Login",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.w600),),
+                              child: isLoading==false?
+                              Text("Login",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.w600),)
+                                  :
+                              Container(
+                                height: 40,
+                                width: 40,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
                             ),
                           ),
                         ),
@@ -142,5 +169,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
 }
