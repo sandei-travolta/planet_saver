@@ -61,7 +61,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     if (snapShot.hasError) {
                       return Center(child: Text('Error: ${snapShot.error}'));
                     }
-                    print("to here");
+
                     for(var a in snapShot.data!){
                       print(a.lastMessage);
                     }
@@ -75,7 +75,13 @@ class _MessageScreenState extends State<MessageScreen> {
                       future: returnUser(id),
                       builder: (context,userSnapshot) {
                         if (userSnapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return Center(
+                              child: Center(
+                                child: Container(
+                                  height: 40,
+                                    width: 40,
+                                    child: CircularProgressIndicator()),
+                              ));
                         }
                         if (!userSnapshot.hasData || userSnapshot.data == null) {
                           return Text('User data not available');
