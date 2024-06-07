@@ -24,7 +24,7 @@ class ChartModel{
     "inquiry":inquiry
   };
   static ChartModel fromSnap(DocumentSnapshot snapshot){
-    var snap=snapshot as Map<String,dynamic>;
+    var snap=snapshot.data() as Map<String,dynamic>;
     return ChartModel(
         from: snap['from'],
         to: snap['to'],

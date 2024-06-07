@@ -29,8 +29,8 @@ class MessagingService {
         conversationId: conversationId,
         lastMessage: lastMessage,
         lastTimeStamp: Timestamp.now(),
-        from:to,
-        to: from,
+        from:from,
+        to: to,
     );
     await db.collection("Users").doc(from).collection('chats').doc(conversationId).set(messageView1.toJson());
     await db.collection("Users").doc(to).collection('chats').doc(conversationId).set(messageView2.toJson());
@@ -54,11 +54,13 @@ class MessagingService {
 
   Stream<List<MessageView>> fetchUserChats(String uid){
     return db.collection("Users").doc(uid).collection('chats').snapshots().map((snapshot) {
+      print("gots");
       return snapshot.docs.map((doc) => MessageView.fromSnap(doc)).toList();
     });
   }
-  Stream<List<ChartModel>> fetchChatMessages(String conversationId){
-    return db.collection('charts').doc(conversationId).collection("messages").snapshots().map((snapShot) {
+  Stream<List<ChartModel>>  fetchChatMessages(String conversationId){
+    return db.collection('chats').doc(conversationId).collection("messages").snapshots().map((snapShot) {
+      print("got");
       return snapShot.docs.map((e) => ChartModel.fromSnap(e)).toList();
     } );
   }

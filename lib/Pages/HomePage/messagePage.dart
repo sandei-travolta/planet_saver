@@ -4,6 +4,7 @@ import 'package:planet_saver/Controllers/user_controller.dart';
 import 'package:planet_saver/FireBase/ChatsFireBase.dart';
 import 'package:planet_saver/Models/MessageViewModel.dart';
 import 'package:planet_saver/Models/user_model.dart';
+import 'package:planet_saver/Pages/ChartPage/chartpage.dart';
 
 import '../../Controllers/user_statemanager.dart';
 import '../Widgets/colors.dart';
@@ -45,8 +46,8 @@ class _MessageScreenState extends State<MessageScreen> {
                   stream:messagingService.fetchUserChats(user.currentser.value!.uid),
                   builder: (context,snapShot){
                     print(user.currentser.value!.uid);
-                    print("stops here");
                     if(snapShot.connectionState==ConnectionState.waiting){
+                      print("waiting");
                       return Center(
                         child: Container(
                           height: 40,
@@ -55,13 +56,16 @@ class _MessageScreenState extends State<MessageScreen> {
                         ),
                       );
                     }
-                    if (!snapShot.hasData || snapShot.data!.isEmpty) {
+                    if (!snapShot.hasData) {
+                      print(snapShot.hasData);
                       return Center(child: Text('No chats available'));
                     }
                     if (snapShot.hasError) {
                       return Center(child: Text('Error: ${snapShot.error}'));
                     }
                     final chats = snapShot.data!;
+
+
                 return ListView.builder(
                   itemCount: chats.length,
                   itemBuilder: (context,index){
@@ -84,45 +88,48 @@ class _MessageScreenState extends State<MessageScreen> {
                         }
 
                         var otherUser = userSnapshot.data!;
-                        return Container(
-                          height: 80,
-                          child:Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: Colors.yellow,
-                                        shape: BoxShape.circle
+                        return InkWell(
+                          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>MessagePage(otherUser: otherUser, conversationId: chats[index].conversationId))),
+                          child: Container(
+                            height: 80,
+                            child:Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          color: Colors.yellow,
+                                          shape: BoxShape.circle
+                                      ),
+                                      child: Image.asset("images/profilePicture.jpg",fit: BoxFit.contain,),
                                     ),
-                                    child: Image.asset("images/profilePicture.jpg",fit: BoxFit.contain,),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      messageHeading(otherUser.name),
-                                      messageSubTxt(chats[index].lastMessage)
-                                    ],
-                                  ),
-                                  const SizedBox(width: 40,),
-                                  /*Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      messageTxt("Hello World"),
-                                    ],
-                                  )*/
-                                ],
-                              ),
-                              const SizedBox(height: 10,),
-                              Container(height: 0.6,color: Colors.black,)
-                            ],
-                          )
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        messageHeading(otherUser.name),
+                                        messageSubTxt(chats[index].lastMessage)
+                                      ],
+                                    ),
+                                    const SizedBox(width: 40,),
+                                    /*Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        messageTxt("Hello World"),
+                                      ],
+                                    )*/
+                                  ],
+                                ),
+                                const SizedBox(height: 10,),
+                                Container(height: 0.6,color: Colors.black,)
+                              ],
+                            )
+                          ),
                         );
                       }
                     );
