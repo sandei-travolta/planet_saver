@@ -61,10 +61,6 @@ class _MessageScreenState extends State<MessageScreen> {
                     if (snapShot.hasError) {
                       return Center(child: Text('Error: ${snapShot.error}'));
                     }
-
-                    for(var a in snapShot.data!){
-                      print(a.lastMessage);
-                    }
                     final chats = snapShot.data!;
                 return ListView.builder(
                   itemCount: chats.length,

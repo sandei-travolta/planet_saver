@@ -57,5 +57,9 @@ class MessagingService {
       return snapshot.docs.map((doc) => MessageView.fromSnap(doc)).toList();
     });
   }
-
+  Stream<List<ChartModel>> fetchChatMessages(String conversationId){
+    return db.collection('charts').doc(conversationId).collection("messages").snapshots().map((snapShot) {
+      return snapShot.docs.map((e) => ChartModel.fromSnap(e)).toList();
+    } );
+  }
 }
