@@ -89,7 +89,10 @@ class _MessagePageState extends State<MessagePage> {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed:(){
-
+                    messageService.sendMessage(
+                        currentUserModel.currentser.value!.uid,
+                        widget.otherUser.uid, messageController.text,false,widget.conversationId);
+                    messageController.clear();
                   },
                 ),
               ],

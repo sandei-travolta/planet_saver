@@ -80,6 +80,8 @@ class _CreateAdState extends State<CreateAd> {
                         isLoading=true;
                       });
                       saveAd.saveAd(descriptionController.text, titleController.text,user.pickedImages.value,int.parse(priceController.text),int.parse(weightController.text),user.currentser.value!.uid);
+                      print(user.currentser.value!.uid);
+                      print(user.currentser.value!.name);
                       user.clearImages();
                       descriptionController.clear();
                       titleController.clear();
