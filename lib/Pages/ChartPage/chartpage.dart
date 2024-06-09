@@ -61,6 +61,7 @@ class _MessagePageState extends State<MessagePage> {
                 for(var a in messages){
                   print(a.message);
                 }
+                messages.sort((a, b) => a.dateStamp.compareTo(b.dateStamp)); // Sort in place
                 return ListView.builder(
                     itemCount: messages.length,
                     itemBuilder: (context,index){
@@ -92,6 +93,7 @@ class _MessagePageState extends State<MessagePage> {
                     messageService.sendMessage(
                         currentUserModel.currentser.value!.uid,
                         widget.otherUser.uid, messageController.text,false,widget.conversationId);
+                    print(currentUserModel.currentser.value!.uid);
                     messageController.clear();
                   },
                 ),
