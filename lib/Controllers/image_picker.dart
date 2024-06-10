@@ -27,8 +27,8 @@ class PickImage{
     _userStorage.updateProfileImage(url!, user.uid);
     print("succsess");
   }
-  Future<List<String>?> pickMultipleImages(ImageSource Source,UserModel? user)async{
-    final List<String> images=[];
+  Future<List<File>?> pickMultipleImages(ImageSource Source,UserModel? user)async{
+    final List<File> images=[];
     try{
       final List<XFile> pickedFileList= await _picker.pickMultiImage(
         limit: 3
@@ -36,8 +36,7 @@ class PickImage{
       print("preparing for upload");
       for(final image in pickedFileList){
         File? selectedImage=File(image.path);
-        String? url=await _bucket.uploadImage(selectedImage,user!.uid);
-        images.add(url!);
+        images.add(selectedImage);
       }
       print("upload SuccessFull");
       ///if(images.isNotEmpty)
@@ -54,5 +53,13 @@ class PickImage{
   void updateUi(String uid)async{
     UserModel? userModel=await _userStorage.getUser(uid);
     userController.setCur(userModel!);
+  }
+  Future<List<String>> saveImages(List<File> files,String id)async{
+    List<String> images=[];
+    for(final image in files){
+      String? url=await _bucket.uploadImage(image, id);
+      images.add(url!);
+    }
+    return images;
   }
 }

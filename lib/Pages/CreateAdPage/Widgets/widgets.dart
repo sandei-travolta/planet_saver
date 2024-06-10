@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class UploadImagesWidget extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: ()async{
-                      List<String> pickedImages=await pickImage.pickMultipleImages(ImageSource.gallery,user.currentser.value)??[];
+                      List<File> pickedImages=await pickImage.pickMultipleImages(ImageSource.gallery,user.currentser.value)??[];
                       user.setImages(pickedImages);
                     },
                     icon: Icon(Icons.photo_camera,size: 45,

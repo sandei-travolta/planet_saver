@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Models/Product.dart';
@@ -6,13 +8,13 @@ import 'package:planet_saver/Pages/LoginPage.dart';
 
 class UserStateController extends GetxController{
   final Rx<UserModel?> currentser=Rx<UserModel?>(null);
-  final RxList<String> pickedImages = <String>[].obs;
+  final RxList<File> pickedImages = <File>[].obs;
   final RxList<Product> productsList=<Product>[].obs;
   final Rx<int> currentSelection=0.obs;
   setCur(UserModel userModel){
     this.currentser.value=userModel;
   }
-  setImages(List<String> list){
+  setImages(List<File> list){
     this.pickedImages.value=list;
   }
   clearImages(){
