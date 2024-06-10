@@ -9,6 +9,8 @@ import '../../Models/Product.dart';
 import '../constants.dart';
 import 'Widget/bottomSheet.dart';
 import 'Widget/buySection.dart';
+import 'Widget/disposalSection.dart';
+import 'Widget/texts.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AdsCloudFireStore adsController=AdsCloudFireStore();
   late List<Product> products;
   final stateController=Get.find<UserStateController>();
+  int selectedpage=0;
   void getProducts()async{
     products=await adsController.fetchProducts();
     stateController.setProducts(products);
@@ -33,6 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final List pages=[
+      buyection(stateController: stateController),
+      DisposalSection()
+    ];
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -110,11 +117,72 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Expanded(
           flex: 1,
-          child: Container(
-            color: Colors.yellow,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 3.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: primaryColorV1.withOpacity(0.3),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          selectedpage=0;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: selectedpage==0?primaryColorV2.withOpacity(0.6):Colors.white,
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal: 35
+                        ),
+                        child: Center(
+                          child: Center(
+                            child: categoryText("On Sell"),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          selectedpage=1;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: selectedpage==1?primaryColorV2.withOpacity(0.6):Colors.white,
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 35
+                        ),
+                        child: Center(
+                          child: Center(
+                            child: categoryText("Disposal"),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
-        buyection(stateController: stateController)
+        pages[selectedpage]
       ],
     );
   }
