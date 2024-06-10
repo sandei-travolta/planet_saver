@@ -132,21 +132,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: InkWell(
                       onTap: (){
                         setState(() {
-                          selectedpage=0;
+                          stateController.setPage(0);
                         });
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: selectedpage==0?primaryColorV2.withOpacity(0.6):Colors.white,
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 35
-                        ),
-                        child: Center(
+                      child: Obx(
+                            ()=>Container(
+                          decoration: BoxDecoration(
+                            color: selectedpage==0?primaryColorV2.withOpacity(0.6):Colors.white,
+                            borderRadius: BorderRadius.circular(15)
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 35
+                          ),
                           child: Center(
-                            child: categoryText("On Sell"),
+                            child: Center(
+                              child: categoryText("On Sell"),
+                            ),
                           ),
                         ),
                       ),
@@ -157,21 +159,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: InkWell(
                       onTap: (){
                         setState(() {
-                          selectedpage=1;
+                          stateController.setPage(1);
                         });
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: selectedpage==1?primaryColorV2.withOpacity(0.6):Colors.white,
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 2,
-                            horizontal: 35
-                        ),
-                        child: Center(
+                      child: Obx(
+                            ()=> Container(
+                          decoration: BoxDecoration(
+                              color: stateController.currentSelection.value==1?primaryColorV2.withOpacity(0.6):Colors.white,
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2,
+                              horizontal: 35
+                          ),
                           child: Center(
-                            child: categoryText("Disposal"),
+                            child: Center(
+                              child: categoryText("Disposal"),
+                            ),
                           ),
                         ),
                       ),

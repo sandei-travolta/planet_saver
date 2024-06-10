@@ -8,6 +8,7 @@ class UserStateController extends GetxController{
   final Rx<UserModel?> currentser=Rx<UserModel?>(null);
   final RxList<String> pickedImages = <String>[].obs;
   final RxList<Product> productsList=<Product>[].obs;
+  final Rx<int> currentSelection=0.obs;
   setCur(UserModel userModel){
     this.currentser.value=userModel;
   }
@@ -24,5 +25,7 @@ class UserStateController extends GetxController{
     currentser.value=null;
     Get.to(LoginPage());
   }
-
+  setPage(int page){
+    this.currentSelection.value=page;
+  }
 }

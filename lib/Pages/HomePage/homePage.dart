@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/Pages/CreateAdPage/CreateAd.dart';
 import 'package:planet_saver/Pages/HomePage/homeScreen.dart';
 import 'package:planet_saver/Pages/HomePage/messagePage.dart';
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomePage> {
      OrdersScreen(),
      ProfileScreen(),
    ];
-
+   final stateController=Get.find<UserStateController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
