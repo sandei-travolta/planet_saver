@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:planet_saver/Controllers/image_picker.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
-class InputFiedsAd extends StatelessWidget {
+class InputFiedsAd extends StatefulWidget {
   const InputFiedsAd({
     super.key,
     required this.titleController, required this.hintText, required this.labelText,
@@ -17,14 +17,19 @@ class InputFiedsAd extends StatelessWidget {
   final String labelText;
 
   @override
+  State<InputFiedsAd> createState() => _InputFiedsAdState();
+}
+
+class _InputFiedsAdState extends State<InputFiedsAd> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
       child: TextFormField(
-        controller: titleController,
+        controller: widget.titleController,
         decoration: InputDecoration(
-            hintText: hintText,
-            labelText: labelText
+            hintText: widget.hintText,
+            labelText: widget.labelText
         ),
       ),
     );
@@ -55,13 +60,20 @@ class NumeralInputFiedsAd extends StatelessWidget {
     );
   }
 }
-class UploadImagesWidget extends StatelessWidget {
+class UploadImagesWidget extends StatefulWidget {
    UploadImagesWidget({
     super.key,
   });
 
+  @override
+  State<UploadImagesWidget> createState() => _UploadImagesWidgetState();
+}
+
+class _UploadImagesWidgetState extends State<UploadImagesWidget> {
   PickImage pickImage=PickImage();
+
   final user=Get.find<UserStateController>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,7 +85,7 @@ class UploadImagesWidget extends StatelessWidget {
               color: Colors.black26,
               borderRadius: BorderRadius.circular(12)
           ),
-          child: Center(
+          child: user.pickedImages.value.isEmpty?Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -81,6 +93,8 @@ class UploadImagesWidget extends StatelessWidget {
                     onPressed: ()async{
                       List<File> pickedImages=await pickImage.pickMultipleImages(ImageSource.gallery,user.currentser.value)??[];
                       user.setImages(pickedImages);
+                      setState(() {
+                      });
                     },
                     icon: Icon(Icons.photo_camera,size: 45,
                     )
@@ -90,7 +104,39 @@ class UploadImagesWidget extends StatelessWidget {
                 ),)
               ],
             ),
-          ),
+          ):Container(
+            child: Obx(
+                ()=>ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: user.pickedImages.value.length,
+                  itemBuilder: (context,index){
+                    return Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.file(user.pickedImages.value[index])),
+                        ),
+                        Positioned(
+                            top: -10,
+                            right: -5,
+                            child: IconButton(
+                            onPressed: (){
+                            user.pickedImages.value.removeAt(index);
+                            setState(() {
+
+                            });
+                          },
+                          icon: Icon(Icons.delete),
+                        )
+                        )
+                      ],
+                    );
+              }
+              ),
+            ),
+          )
         ),
     );
   }
