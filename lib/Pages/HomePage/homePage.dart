@@ -30,17 +30,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: FloatingActionButton.extended(onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateAd()));
-      }, label: Text(
-        "Sell",
-        style: TextStyle(
-          fontSize: 18
+      floatingActionButton: Obx(
+          ()=>FloatingActionButton.extended(onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateAd()));
+        }, label: Text(
+         stateController.currentSelection.value==0?"Sell":"PickUp",
+          style: TextStyle(
+            fontSize: 18
+          ),
         ),
-      ),
-        icon: Icon(Icons.shopping_cart,
-          size:30),
-        backgroundColor: primaryColorV2,
+          icon: Icon(
+              stateController.currentSelection.value==0?Icons.shopping_cart:Icons.cleaning_services_outlined,
+            size:30),
+          backgroundColor: primaryColorV2,
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

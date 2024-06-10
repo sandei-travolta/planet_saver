@@ -130,25 +130,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           stateController.setPage(0);
                         });
                       },
                       child: Obx(
-                            ()=>Container(
+                            () => Container(
                           decoration: BoxDecoration(
-                            color: selectedpage==0?primaryColorV2.withOpacity(0.6):Colors.white,
-                            borderRadius: BorderRadius.circular(15)
+                            color: stateController.currentSelection.value == 0
+                                ? primaryColorV2.withOpacity(0.6)
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.symmetric(
                             vertical: 2,
-                            horizontal: 35
+                            horizontal: 35,
                           ),
                           child: Center(
-                            child: Center(
-                              child: categoryText("On Sell"),
-                            ),
+                            child: categoryText("On Sell"),
                           ),
                         ),
                       ),
@@ -157,36 +157,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           stateController.setPage(1);
                         });
                       },
                       child: Obx(
-                            ()=> Container(
+                            () => Container(
                           decoration: BoxDecoration(
-                              color: stateController.currentSelection.value==1?primaryColorV2.withOpacity(0.6):Colors.white,
-                              borderRadius: BorderRadius.circular(15)
+                            color: stateController.currentSelection.value == 1
+                                ? primaryColorV2.withOpacity(0.6)
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(15),
                           ),
                           padding: EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 35
+                            vertical: 2,
+                            horizontal: 35,
                           ),
                           child: Center(
-                            child: Center(
-                              child: categoryText("Disposal"),
-                            ),
+                            child: categoryText("Disposal"),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ],
-              ),
+              )
             ),
           ),
         ),
-        pages[selectedpage]
+        Obx(() => pages[stateController.currentSelection.value])
       ],
     );
   }
