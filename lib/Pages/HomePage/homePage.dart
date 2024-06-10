@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/Pages/CreateAdPage/CreateAd.dart';
+import 'package:planet_saver/Pages/CreateAdPage/PickUpRequest.dart';
 import 'package:planet_saver/Pages/HomePage/homeScreen.dart';
 import 'package:planet_saver/Pages/HomePage/messagePage.dart';
 import 'package:planet_saver/Pages/HomePage/ordersScreen.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: Obx(
           ()=>FloatingActionButton.extended(onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateAd()));
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>stateController.currentSelection.value==0?CreateAd():RequestPickUp()));
         }, label: Text(
          stateController.currentSelection.value==0?"Sell":"PickUp",
           style: TextStyle(
