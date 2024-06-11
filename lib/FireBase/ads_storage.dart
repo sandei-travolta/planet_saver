@@ -54,5 +54,17 @@ class AdsCloudFireStore{
 
     return products;
   }
-
+  Future<List<Product>> fetchDisposals()async{
+    List<Product> disposals=[];
+    try{
+      QuerySnapshot querySnapshot=await _disposalCollection.get();
+      for(var doc in querySnapshot.docs){
+        Product product=Product.fromSnap(doc);
+        disposals.add(product);
+      }
+    }catch(e){
+      print("Error fetching disposal ${e}");
+    }
+    return disposals;
+  }
 }
