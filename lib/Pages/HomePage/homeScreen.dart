@@ -21,11 +21,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   AdsCloudFireStore adsController=AdsCloudFireStore();
   late List<Product> products;
+  late List<Product> disposals;
+
   final stateController=Get.find<UserStateController>();
   int selectedpage=0;
   void getProducts()async{
     products=await adsController.fetchProducts();
+    disposals=await adsController.fetchDisposals();
     stateController.setProducts(products);
+    stateController.setDisposals(disposals);
   }
   @override
   void initState(){
