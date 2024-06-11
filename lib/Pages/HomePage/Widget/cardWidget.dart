@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Models/Product.dart';
@@ -26,7 +27,17 @@ class CardWidget extends StatelessWidget {
                     flex: 3,
                     child: Container(
                       width: double.maxFinite,
-                      child: Image.network(product.url[0],fit: BoxFit.fill,),
+                      child: CachedNetworkImage(
+                        placeholder: (context,url)=>
+                            Center(
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                        imageUrl: product.url[0],fit: BoxFit.fill,
+                      ),
                     )),
                 Expanded(
                     flex: 1,

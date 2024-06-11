@@ -65,6 +65,7 @@ class AdsCloudFireStore{
     }catch(e){
       print("Error fetching disposal ${e}");
     }
+    print("done");
     return disposals;
   }
 }
