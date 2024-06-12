@@ -8,7 +8,8 @@ class CustomSearchDelegeta extends SearchDelegate{
   @override
   List<Widget>? buildActions(BuildContext context) {
     // TODO: implement buildActions
-    return [IconButton(
+    return [
+      IconButton(
       onPressed:(){
         query='';
     },
@@ -55,6 +56,7 @@ class CustomSearchDelegeta extends SearchDelegate{
     }
     // TODO: implement buildSuggestions
     return ListView.builder(
+        itemCount: suggestions.length,
         itemBuilder: (context,index){
           Product product=suggestions[index];
           return ListTile(
