@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-          flex:3,
+          flex:2,
           child: Container(
             decoration: BoxDecoration(
               color: primaryColorV2.withOpacity(0.8)
@@ -65,15 +65,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14)
-                      ),
-                      height: 43,
-                      width: 250,
-                    ),
                     const SizedBox(width: 10,),
+                    Container(
+                      width: context.width*0.8,
+                      height: 40,
+                      decoration: BoxDecoration(
+                      ),
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categories.length,
+                          itemBuilder: (context,index){
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
+                              child: Container(
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: primaryColorV1.withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(12)
+                                ),
+                                child: Center(
+                                    child:Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(
+                                        categories[index],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          color: Colors.white
+                                        ),
+                                      ),
+                                    )
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
                     IconButton(onPressed: (){
                       List<Product> list=stateController.currentSelection.value==0?stateController.productsList.value:stateController.disposalList.value;
                       showSearch(
@@ -82,44 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               list: list
                           )
                       );
-                      }, icon:Icon(Icons.search,size: 28,color: Colors.black,)),
-                    Text("Search",style: TextStyle(fontSize: 18,fontWeight: FontWeight.normal),)
+                      }, icon:Icon(Icons.search,size: 30,color: Colors.white,)),
                   ],
                 ),
-                const SizedBox(height: 18,),
-                Container(
-                  width: 390,
-                  height: 40,
-                  decoration: BoxDecoration(
-                  ),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                      itemBuilder: (context,index){
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Container(
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12)
-                        ),
-                        child: Center(
-                          child:Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2),
-                            child: Text(
-                              categories[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15
-                              ),
-                            ),
-                          )
-                        ),
-                      ),
-                    );
-                  }),
-                )
               ],
             ),
           ),
