@@ -19,12 +19,21 @@ class buyection extends StatelessWidget {
         flex: 10,
         child: Container(
           child: Obx(
-                ()=>ListView.builder(
-                itemCount: stateController.productsList.value.length,
-                itemBuilder:(context,index){
-                  List<Product> product=stateController.productsList.value;
-                  return CardWidget(product: product[index]);
-                }),
+                ()=>GridView.builder(
+                  itemCount: stateController.productsList.value.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5
+                  ), itemBuilder: (BuildContext context, int index) {
+                    Product product=stateController.productsList.value[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AdCard(product: product),
+                    );
+                },
+                )
           ),
         )
     );

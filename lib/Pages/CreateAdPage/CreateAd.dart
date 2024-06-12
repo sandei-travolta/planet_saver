@@ -68,7 +68,11 @@ class _CreateAdState extends State<CreateAd> {
             Text("Upload Images",style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600
-            ),),
+            ),
+            ),
+            TextFormField(
+
+            ),
             UploadImagesWidget(),
             ///add  type and region form fields
             Padding(

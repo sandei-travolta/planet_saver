@@ -44,6 +44,7 @@ dependencies:
   image_picker: ^1.1.1
   firebase_storage: ^11.7.6
   cached_network_image: ^3.3.1
+  dropdown_textfield: ^1.1.0
 
 
 dev_dependencies:
