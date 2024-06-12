@@ -4,6 +4,7 @@ import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/FireBase/ads_storage.dart';
 import 'package:planet_saver/Pages/DescriptionPage/DescriptionPage.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
+import 'package:planet_saver/Pages/utilities/searchfunction.dart';
 
 import '../../Models/Product.dart';
 import '../constants.dart';
@@ -74,11 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(width: 10,),
                     IconButton(onPressed: (){
-                      showBottomSheet(context: context, builder:(_){
-                        return CustomBottomSheet();
-                      });
-                    }, icon:Icon(Icons.filter_list,size: 28,color: Colors.black,)),
-                    Text("Filter",style: TextStyle(fontSize: 18,fontWeight: FontWeight.normal),)
+                      List<Product> list=stateController.currentSelection.value==0?stateController.productsList.value:stateController.disposalList.value;
+                      showSearch(
+                          context: context,
+                          delegate: CustomSearchDelegeta(
+                              list: list
+                          )
+                      );
+                      }, icon:Icon(Icons.search,size: 28,color: Colors.black,)),
+                    Text("Search",style: TextStyle(fontSize: 18,fontWeight: FontWeight.normal),)
                   ],
                 ),
                 const SizedBox(height: 18,),
