@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +24,8 @@ class _CreateAdState extends State<CreateAd> {
   TextEditingController weightController=TextEditingController();
 
   final AdsCloudFireStore saveAd=AdsCloudFireStore();
+ /* SingleValueDropDownController product=SingleValueDropDownController();*/
+
 
   bool isLoading=false;
 
