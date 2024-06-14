@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
@@ -83,7 +84,15 @@ class DescriptionPage extends StatelessWidget {
                       Container(
                           height: double.maxFinite,
                           width: double.infinity,
-                          child: Image.network(product.url[0],fit: BoxFit.fill,)),
+                          child: CachedNetworkImage(
+                            placeholder: (context,url)=>Center(
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                            imageUrl:product.url[0],fit: BoxFit.fill,)),
                       Positioned(
                           child: InkWell(
                             onTap: ()=>Navigator.pop(context),
@@ -110,7 +119,7 @@ class DescriptionPage extends StatelessWidget {
                 child: Container(
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                      itemCount: 4,
+                      itemCount: product.url.length,
                       itemBuilder: (context,index){
                     return Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -120,7 +129,11 @@ class DescriptionPage extends StatelessWidget {
                           color: Colors.black12,
                           width: 200,
                           height: 200,
-                          child: Image.network(product.url[0],fit: BoxFit.fill,),
+                          child: CachedNetworkImage(
+                            placeholder: (context,url)=>Center(
+
+                            ),
+                            imageUrl:product.url[index],fit: BoxFit.fill,),
                         ),
                       ),
                     );
