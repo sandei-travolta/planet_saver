@@ -131,7 +131,11 @@ class DescriptionPage extends StatelessWidget {
                           height: 200,
                           child: CachedNetworkImage(
                             placeholder: (context,url)=>Center(
-
+                              child: Container(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              ),
                             ),
                             imageUrl:product.url[index],fit: BoxFit.fill,),
                         ),
