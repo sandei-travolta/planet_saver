@@ -8,7 +8,9 @@ class Product{
   final String description;
   final int price;
   final int weight;
-  Product({required this.description,required this.tittle, required this.url, required this.price, required this.weight, required this.uid});
+  final String category;
+  final String region;
+  Product({required this.description,required this.tittle, required this.url, required this.price, required this.weight, required this.uid,required this.category,required this.region});
   Map<String,dynamic> toJson()=>{
     "tittle":tittle,
     "url":url,
@@ -25,6 +27,9 @@ class Product{
         description: snap['description'],
         price:snap['price'],
         weight:snap['weight'],
-        uid:snap['uid']);
+        uid:snap['uid'],
+        category: snap['category'],
+        region: snap['region']
+    );
   }
 }
