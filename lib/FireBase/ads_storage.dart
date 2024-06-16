@@ -8,7 +8,7 @@ class AdsCloudFireStore{
   CollectionReference<Map<dynamic, dynamic>> _firebaseFirestore=FirebaseFirestore.instance.collection("Products");
   CollectionReference<Map<dynamic, dynamic>> _disposalCollection=FirebaseFirestore.instance.collection("Disposals");
   PickImage pickImage=PickImage();
-  Future<bool> saveAd(String description,String tittle,List<File> files,int price,int weight,String uid)async{
+  Future<bool> saveAd(String description,String tittle,List<File> files,int price,int weight,String uid,String category,String region)async{
     bool isSaved=false;
     List<String> urls=await pickImage.saveImages(files, uid);
     Product product=Product(description: description,
@@ -16,14 +16,16 @@ class AdsCloudFireStore{
         url: urls,
         price: price,
         weight: weight,
-        uid: uid
+        uid: uid,
+        category: category,
+        region: region
     );
     await _firebaseFirestore.doc().set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)
       return true;
     return false;
   }
-  Future<bool> saveDisposalAd(String description,String tittle,List<File> files,int price,int weight,String uid)async{
+  Future<bool> saveDisposalAd(String description,String tittle,List<File> files,int price,int weight,String uid,String category,String region)async{
     bool isSaved=false;
     List<String> urls=await pickImage.saveImages(files, uid);
     Product product=Product(description: description,
@@ -31,7 +33,9 @@ class AdsCloudFireStore{
         url: urls,
         price: price,
         weight: weight,
-        uid: uid
+        uid: uid,
+        category: category,
+        region: region
     );
     await _disposalCollection.doc().set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)

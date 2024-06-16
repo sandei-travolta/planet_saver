@@ -23,6 +23,10 @@ class _CreateAdState extends State<CreateAd> {
 
   TextEditingController weightController=TextEditingController();
 
+  TextEditingController categoryController=TextEditingController();
+
+  TextEditingController regionController=TextEditingController();
+
   final AdsCloudFireStore saveAd=AdsCloudFireStore();
  /* SingleValueDropDownController product=SingleValueDropDownController();*/
 
@@ -84,7 +88,14 @@ class _CreateAdState extends State<CreateAd> {
                       setState(() {
                         isLoading=true;
                       });
-                      saveAd.saveAd(descriptionController.text, titleController.text,user.pickedImages.value,int.parse(priceController.text),int.parse(weightController.text),user.currentser.value!.uid);
+                      saveAd.saveAd(
+                          descriptionController.text,
+                          titleController.text,user.pickedImages.value,
+                          int.parse(priceController.text),
+                          int.parse(weightController.text),
+                          user.currentser.value!.uid,
+                          categoryController.text,
+                          regionController.text);
                       print(user.currentser.value!.uid);
                       print(user.currentser.value!.name);
                       user.clearImages();

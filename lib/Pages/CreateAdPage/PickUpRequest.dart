@@ -21,6 +21,8 @@ class _RequestPickUpState extends State<RequestPickUp> {
   TextEditingController priceController=TextEditingController();
 
   TextEditingController weightController=TextEditingController();
+  TextEditingController categoryController=TextEditingController();
+  TextEditingController regionController=TextEditingController();
 
   bool isLoading=false;
   final user=Get.find<UserStateController>();
@@ -75,7 +77,7 @@ class _RequestPickUpState extends State<RequestPickUp> {
                       setState(() {
                         isLoading=true;
                       });
-                      saveAd.saveDisposalAd(descriptionController.text, titleController.text,user.pickedImages.value,int.parse(priceController.text),int.parse(weightController.text),user.currentser.value!.uid);
+                      saveAd.saveDisposalAd(descriptionController.text, titleController.text,user.pickedImages.value,int.parse(priceController.text),int.parse(weightController.text),user.currentser.value!.uid,categoryController.text,regionController.text);
                       print(user.currentser.value!.uid);
                       print(user.currentser.value!.name);
                       user.clearImages();
@@ -86,6 +88,7 @@ class _RequestPickUpState extends State<RequestPickUp> {
                       setState(() {
                         isLoading=false;
                       });
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("SAved")));
                       print("ad successfull");
                     }
                     else
