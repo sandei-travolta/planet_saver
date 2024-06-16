@@ -7,9 +7,12 @@ Final Year Project
 - Post Ads and also Pickup reuests
 - real time messaging
 - Save Images in FireBase FireStore
+
+  <div>
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0004.jpg">
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0005.jpg">
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0006.jpg">
+  </div>
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0007.jpg">
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0008.jpg">
 <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0009.jpg">
