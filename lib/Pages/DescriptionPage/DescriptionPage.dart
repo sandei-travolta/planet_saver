@@ -164,7 +164,7 @@ class DescriptionPage extends StatelessWidget {
                                 children: [
                                   Icon(Icons.add_chart_sharp),
                                   const SizedBox(width: 10,),
-                                  Text("Plastic",style: TextStyle(
+                                  Text(product.category,style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     color: Colors.black45
@@ -205,7 +205,7 @@ class DescriptionPage extends StatelessWidget {
                                 children: [
                                   Icon(Icons.location_on,size: 25,),
                                   Text(
-                                    "Nyeri",
+                                    product.region,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w400,
