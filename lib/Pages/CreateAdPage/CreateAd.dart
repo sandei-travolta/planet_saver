@@ -116,7 +116,7 @@ class _CreateAdState extends State<CreateAd> {
                     builder: (BuildContext context) {
                       return SimpleDialog(
                         title: const Text('Select Region'),
-                        children: categories.map((String category) {
+                        children: counties.map((String category) {
                           return SimpleDialogOption(
                             onPressed: () {
                               Navigator.pop(context, category);

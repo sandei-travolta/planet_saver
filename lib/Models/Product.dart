@@ -18,6 +18,8 @@ class Product{
     "price":price,
     "weight":weight,
     "uid":uid,
+    "category":category,
+    "region":region
   };
   static Product fromSnap(DocumentSnapshot snapshot){
     var snap=snapshot.data() as Map<String,dynamic>;
