@@ -10,7 +10,7 @@ Final Year Project
 
 | Login Page | Registration Page | Registration Page |
 |---------|---------|---------|
-| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0005.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0006.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0010.jpg" width="200"> |
+| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0005.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0006.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0009.jpg" width="200"> |
 
 | Home Page | Disposals Page| Description Page|
 |---------|---------|---------|
