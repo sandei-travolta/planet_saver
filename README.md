@@ -1,16 +1,37 @@
 # planet_saver
 
-A new Flutter project.
+Final Year Project
 
-## Getting Started
+## Features
+- Registration and authentication using Firebase Authentication Service
+- Post Ads and also Pickup requests
+- Real-time messaging
+- Save images in Firestore
+## Packages
+- FirebaseAuth for Authentication
+- FirebaseFirestore as the database
+- FirebaseStorage for saving images
+- GetX for StateManagement
+- Image Picker for selecting images
+- Cached NetWorkImage for downloading and caching the images
+- syncfusion flutter datepicker for picking dates
+- intl for formatting date and time
 
-This project is a starting point for a Flutter application.
+## ScreenShots
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+| Login Page | Registration Page | Registration Page |
+|---------|---------|---------|
+| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0005.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0009.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0010.jpg" width="200"> |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Home Page | Disposals Page| Description Page|
+|---------|---------|---------|
+| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0013.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0012.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0007.jpg" width="200"> |
+
+| Message Screen | Orders Page| Profie Screen |
+|---------|---------|---------|
+| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0008.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0006.jpg" width="200"> | <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0004.jpg" width="200"> |
+
+| Search Page |
+|----------|
+| <img src="https://github.com/sandei-travolta/planet_saver/blob/master/screenshots/IMG-20240616-WA0011.jpg" width="200"> |
