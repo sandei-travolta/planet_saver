@@ -6,6 +6,7 @@ import 'package:planet_saver/Pages/Widgets/colors.dart';
 
 import '../../Controllers/user_statemanager.dart';
 import '../Widgets/textWidgets.dart';
+import '../constants.dart';
 import 'Widgets/widgets.dart';
 class CreateAd extends StatefulWidget {
   CreateAd({Key? key}) : super(key: key);
@@ -70,13 +71,78 @@ class _CreateAdState extends State<CreateAd> {
               hintText: 'What are You Selling ?',
               labelText: 'Product Tittle',
             ),
-            Text("Upload Images",style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600
-            ),
-            ),
-            TextFormField(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+              child: TextFormField(
+                controller: categoryController,
+                readOnly: true,
+                onTap: ()async{
+                  String? selectedValue = await showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                        title: const Text('Select Category'),
+                        children: categories.map((String category) {
+                          return SimpleDialogOption(
+                            onPressed: () {
+                              Navigator.pop(context, category);
+                            },
+                            child: Text(category),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  );
 
+                  if (selectedValue != null) {
+                    setState(() {
+                      categoryController.text = selectedValue;
+                    });
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "Select Category",
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+              child: TextFormField(
+                controller: regionController,
+                readOnly: true,
+                onTap: ()async{
+                  String? selectedValue = await showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SimpleDialog(
+                        title: const Text('Select Region'),
+                        children: categories.map((String category) {
+                          return SimpleDialogOption(
+                            onPressed: () {
+                              Navigator.pop(context, category);
+                            },
+                            child: Text(category),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  );
+
+                  if (selectedValue != null) {
+                    setState(() {
+                      regionController.text = selectedValue;
+                    });
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "Select Region",
+                ),
+              ),
+            ),
+            Text("Upload Images",style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600
+            ),
             ),
             UploadImagesWidget(),
             ///add  type and region form fields
