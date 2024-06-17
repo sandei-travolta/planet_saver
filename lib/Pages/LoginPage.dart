@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final userStateController =Get.find<UserStateController>();
 
-  bool isVisible=true;
+  bool isVisible=false;
   bool isLoading=false;
 
   @override
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                             width: 300,
                             child: TextFormField(
-                              obscureText: isVisible,
+                              obscureText: !isVisible,
                                 controller: passwordController,
                                 decoration: const InputDecoration(
                                   filled: true,
@@ -97,9 +97,15 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Checkbox(value: (isVisible), onChanged: (value){
-                              value!=value;
-                            }),
+                            Checkbox(
+                              value: isVisible,
+                              onChanged: (value) {
+                                setState(() {
+                                  isVisible = value!;
+                                });
+                                print(isVisible);
+                              },
+                            ),
                             Text("Show Password",style: TextStyle(color: Colors.white,fontSize: 20),),
                           ],
                         ),
