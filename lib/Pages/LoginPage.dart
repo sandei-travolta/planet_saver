@@ -115,13 +115,13 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                               isLoading=true;
                             });
-                            UserModel? userModel=await _userController.loginUser(emailController.text, passwordController.text);
-                            userStateController.setCur(userModel!);
+                            bool loggedIn=await _userController.loginUser(emailController.text, passwordController.text,context);
+                            if(loggedIn){
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
+                            }
                             setState(() {
                               isLoading=false;
                             });
-                            if(userModel!=null)
-                              Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
                           },
                           child: Container(
                             height: 55,
