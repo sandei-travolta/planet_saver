@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+
 import 'package:planet_saver/Controllers/user_controller.dart';
-import 'package:planet_saver/Pages/LoginPage.dart';
+
 import 'package:planet_saver/Pages/LoginPage/registrationFom2.dart';
 import 'package:planet_saver/Pages/LoginPage/registrationForm1.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';

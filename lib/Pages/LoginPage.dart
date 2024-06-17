@@ -6,6 +6,7 @@ import 'package:planet_saver/Pages/HomePage/homePage.dart';
 import 'package:planet_saver/Pages/LoginPage/RegisterPage.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 import 'package:planet_saver/Pages/Widgets/textWidgets.dart';
+import 'package:planet_saver/Pages/forgotPassword.dart';
 
 import '../Controllers/user_controller.dart';
 import '../Controllers/user_statemanager.dart';
@@ -148,7 +149,11 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text("Forgot Password ?",style: TextStyle(color: Colors.white,fontSize: 20),),
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_)=>ForgotPassword()));
+                              },
+                                child: Text("Forgot Password ?",style: TextStyle(color: Colors.white,fontSize: 20),)),
                             const SizedBox(width: 35,)
                           ],
                         ),
