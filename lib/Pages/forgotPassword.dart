@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_controller.dart';
 import 'package:planet_saver/Pages/Widgets/textWidgets.dart';
 
 import 'LoginPage/registrationFom2.dart';
@@ -8,12 +9,13 @@ import 'Widgets/textinput_widgets.dart';
 class ForgotPassword extends StatelessWidget {
   ForgotPassword({Key? key}) : super(key: key);
   TextEditingController emailController=TextEditingController();
+  UserController _userController=UserController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const SizedBox(height: 30,),
+          const SizedBox(height: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -46,10 +48,29 @@ class ForgotPassword extends StatelessWidget {
                     color: Colors.white
                   ),),
                   SizedBox(
-                    height: context.height*0.2,
+                    height: context.height*0.1,
                   ),
-                  registrationTextFields(emailController,Icons.email,"Email","Enter Email"),
-                ],
+                  registrationTextFields(emailController,Icons.email,"Enetr Email","Email"),
+                  SizedBox(
+                    height: context.height*0.15,
+                  ),
+              InkWell(
+                onTap: ()async{
+                  bool reset=await _userController.resetPassword(emailController.text,context);
+                  if(reset)
+                    print("reset");
+                },
+                child: Container(
+                  height: 55,
+                  width: 220,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: primaryColorV2
+                  ),
+                  child: Center(
+                    child: Text("Reset",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.w600),)
+                  )),
+              )],
               ),
             ),
           ),

@@ -29,9 +29,10 @@ class UserController{
     _userStorage.saveUser(userModel).then((value){
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>LoginPage()));});
   }
-  Future<bool> resetPassword(String email)async{
+  Future<bool> resetPassword(String email,BuildContext context)async{
     try{
       await _userAuthentication.auth.sendPasswordResetEmail(email: email);
+      successCustomSnackBar("Email Sent", context);
       return true;
     }catch(e){
 
