@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Product> products;
   late List<Product> disposals;
 
+   int? selectedCategory=null;
   final stateController=Get.find<UserStateController>();
   int selectedpage=0;
   void getProducts()async{
@@ -31,6 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
     disposals=await adsController.fetchDisposals();
     stateController.setProducts(products);
     stateController.setDisposals(disposals);
+  }
+  void filterProducts(String category)async{
+    List<Product> filteredproduct=products.where((product) => product.category==category).toList();
+    List<Product> filteredDisposal=disposals.where((product) => product.category==category).toList();
   }
   @override
   void initState(){
@@ -77,24 +82,38 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context,index){
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
-                              child: Container(
-                                height: 10,
-                                decoration: BoxDecoration(
-                                    color: primaryColorV1.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(12)
-                                ),
-                                child: Center(
-                                    child:Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(
-                                        categories[index],
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 15,
-                                          color: Colors.white
+                              child: InkWell(
+                                onTap: (){
+                                  if(selectedCategory.isNull||selectedCategory!=index){
+                                    setState(() {
+                                      selectedCategory=index;
+                                    });
+                                  }
+                                  else if(!selectedCategory.isNull&&selectedCategory==index){
+                                    setState(() {
+                                      selectedCategory=null;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                      color: !selectedCategory.isNull && selectedCategory==index?Colors.yellow:primaryColorV1.withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(12)
+                                  ),
+                                  child: Center(
+                                      child:Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                        child: Text(
+                                          categories[index],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 15,
+                                            color: Colors.white
+                                          ),
                                         ),
-                                      ),
-                                    )
+                                      )
+                                  ),
                                 ),
                               ),
                             );
