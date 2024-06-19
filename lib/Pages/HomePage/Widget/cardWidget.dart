@@ -22,7 +22,7 @@ class AdCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         child: Container(
           color: primaryColorV2.withOpacity(0.8),
-          height: 150,
+          height: 160,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

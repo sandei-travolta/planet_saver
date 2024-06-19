@@ -27,6 +27,7 @@ class UserController{
         location: 0,
         verified: false);
     _userStorage.saveUser(userModel).then((value){
+      successCustomSnackBar("Account Created", context);
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>LoginPage()));});
   }
   Future<bool> resetPassword(String email,BuildContext context)async{

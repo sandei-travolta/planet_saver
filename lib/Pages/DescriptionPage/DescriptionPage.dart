@@ -21,12 +21,15 @@ class DescriptionPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("${product.tittle}",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w600,
-              color: Colors.white
-            ),),
+            Container(
+              width: 100,
+              child: Text("${product.tittle}",maxLines: 1,overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: Colors.white
+              ),),
+            ),
             Text("~${product.price} Ksh",
               style: TextStyle(
                   fontSize: 25,

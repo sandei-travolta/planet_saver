@@ -24,7 +24,7 @@ class buyection extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.8,
-                    crossAxisSpacing: 5,
+                    crossAxisSpacing: 2,
                     mainAxisSpacing: 5
                   ), itemBuilder: (BuildContext context, int index) {
                     Product product=stateController.productsList.value[index];

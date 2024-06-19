@@ -27,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
    int? selectedCategory=null;
   final stateController=Get.find<UserStateController>();
   int selectedpage=0;
+  late List<Product> filteredproduct;
+  late List<Product> filteredDisposal;
   void getProducts()async{
     products=await adsController.fetchProducts();
     disposals=await adsController.fetchDisposals();
@@ -34,8 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
     stateController.setDisposals(disposals);
   }
   void filterProducts(String category)async{
-    List<Product> filteredproduct=products.where((product) => product.category==category).toList();
-    List<Product> filteredDisposal=disposals.where((product) => product.category==category).toList();
+    filteredproduct=products.where((product) => product.category==category).toList();
+    filteredDisposal=disposals.where((product) => product.category==category).toList();
+    stateController.setProducts(products);
+    stateController.setDisposals(disposals);
   }
   @override
   void initState(){
@@ -88,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       selectedCategory=index;
                                     });
+                                    filterProducts(categories[index]);
                                   }
                                   else if(!selectedCategory.isNull&&selectedCategory==index){
                                     setState(() {
@@ -98,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Container(
                                   height: 10,
                                   decoration: BoxDecoration(
-                                      color: !selectedCategory.isNull && selectedCategory==index?Colors.yellow:primaryColorV1.withOpacity(0.8),
+                                      color: !selectedCategory.isNull && selectedCategory==index?Colors.white:primaryColorV1.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(12)
                                   ),
                                   child: Center(
@@ -109,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.normal,
                                               fontSize: 15,
-                                            color: Colors.white
+                                            color:  !selectedCategory.isNull && selectedCategory==index?Colors.black:Colors.white,
                                           ),
                                         ),
                                       )
