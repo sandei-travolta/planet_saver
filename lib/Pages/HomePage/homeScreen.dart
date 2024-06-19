@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void filterProducts(String category)async{
     filteredproduct=products.where((product) => product.category==category).toList();
     filteredDisposal=disposals.where((product) => product.category==category).toList();
-    stateController.setProducts(products);
-    stateController.setDisposals(disposals);
+    stateController.setProducts(filteredproduct);
+    stateController.setDisposals(filteredDisposal);
   }
   @override
   void initState(){
@@ -98,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       selectedCategory=null;
                                     });
+                                    getProducts();
                                   }
                                 },
                                 child: Container(

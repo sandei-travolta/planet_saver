@@ -11,6 +11,8 @@ class UserStateController extends GetxController{
   final RxList<File> pickedImages = <File>[].obs;
   final RxList<Product> productsList=<Product>[].obs;
   final RxList<Product> disposalList=<Product>[].obs;
+  final RxList<Product> filteredproductsList=<Product>[].obs;
+  final RxList<Product> filtereddisposalList=<Product>[].obs;
   final Rx<int> currentSelection=0.obs;
   setCur(UserModel userModel){
     this.currentser.value=userModel;
@@ -26,6 +28,12 @@ class UserStateController extends GetxController{
   }
   setDisposals(List<Product> disposals){
     this.disposalList.value=disposals;
+  }
+  filterProducts(List<Product> products){
+    this.filteredproductsList.value=products;
+  }
+  filterDisposals(List<Product> disposals){
+    this.filtereddisposalList.value=disposals;
   }
   void clearUser(){
     currentser.value=null;
