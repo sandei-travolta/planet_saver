@@ -98,7 +98,25 @@ class DescriptionPage extends StatelessWidget {
                             imageUrl:product.url[0],fit: BoxFit.fill,)),
                       Positioned(
                           child: InkWell(
-                            onTap: ()=>Navigator.pop(context),
+                            onTap: ()=>showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context){
+                                return Container(
+                                  height: context.mediaQuery.size.height*0.6,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(12),
+                                      topLeft: Radius.circular(12)
+                                    )
+                                  ),
+                                  child: Column(
+                                    children: [
+
+                                    ],
+                                  ),
+                                );
+                              }
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Container(
@@ -108,8 +126,11 @@ class DescriptionPage extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: primaryColorV2,
                                                       ),
-                                                      child: Center(child: Icon(Icons.arrow_back,
-                                                      size: 40,)),
+                                                      child: Center(child: Icon(Icons.shopping_cart,
+                                                      size: 30,
+                                                      color: Colors.white,
+                                                      )
+                                                      ),
                                                     ),
                             ),
                           ))
