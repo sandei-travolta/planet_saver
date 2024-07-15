@@ -101,7 +101,15 @@ class DescriptionPage extends StatelessWidget {
                             onTap: ()=>showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context){
+                                TextEditingController nameConroller=TextEditingController();
+                                TextEditingController townController=TextEditingController();
+                                TextEditingController mobileNoController=TextEditingController();
+                                TextEditingController dateController=TextEditingController();
+                                nameConroller.text=user.currentser.value!.name;
+                                mobileNoController.text=user.currentser.value!.mobileNo.toString();
+
                                 return Container(
+                                  width: double.maxFinite,
                                   height: context.mediaQuery.size.height*0.6,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
@@ -110,8 +118,16 @@ class DescriptionPage extends StatelessWidget {
                                     )
                                   ),
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-
+                                      const SizedBox(height: 10,),
+                                      Text("Place Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+                                      const SizedBox(height: 5,),
+                                      TextField(
+                                        decoration: InputDecoration(
+                                          hintText: "Name"
+                                        )
+                                      )
                                     ],
                                   ),
                                 );
