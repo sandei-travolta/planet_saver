@@ -1,12 +1,15 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/FireBase/ChatsFireBase.dart';
+import 'package:planet_saver/Models/PaymentResponse.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 
 
 import '../../Controllers/paymentController.dart';
+import '../../Controllers/user_controller.dart';
 import '../../Models/Product.dart';
 class DescriptionPage extends StatelessWidget {
    DescriptionPage({Key? key, required this.product}) : super(key: key);
@@ -100,109 +103,7 @@ class DescriptionPage extends StatelessWidget {
                             imageUrl:product.url[0],fit: BoxFit.fill,)),
                       Positioned(
                           child: InkWell(
-                            onTap: ()=>showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context){
-                                TextEditingController nameConroller=TextEditingController();
-                                TextEditingController townController=TextEditingController();
-                                TextEditingController mobileNoController=TextEditingController();
-                                TextEditingController dateController=TextEditingController();
-                                nameConroller.text=user.currentser.value!.name;
-                                mobileNoController.text=user.currentser.value!.mobileNo.toString();
-
-                                return Container(
-                                  width: double.maxFinite,
-                                  height: context.mediaQuery.size.height*0.6,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(12),
-                                      topLeft: Radius.circular(12)
-                                    )
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 10,),
-                                      Text("Place Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
-                                      const SizedBox(height: 5,),
-                                      modalFormTittles("Your Name"),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                        child: TextField(
-                                          controller: nameConroller,
-                                          decoration: InputDecoration(
-                                            hintText: "Name"
-                                          )
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10,),
-                                      modalFormTittles("Delivery Adrress"),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                        child: TextField(
-                                            controller: townController,
-                                            decoration: InputDecoration(
-                                                hintText: "Your Location"
-                                            )
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10,),
-                                      modalFormTittles("Mobile No to make Payment"),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 5),
-                                        child: TextField(
-                                            controller: mobileNoController,
-                                            decoration: InputDecoration(
-                                                hintText: "No to Make Payment"
-                                            )
-                                        ),
-                                      ),
-                                      modalFormTittles("Pick Up Date"),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                        child: TextField(
-                                            controller: dateController,
-                                            decoration: InputDecoration(
-                                                hintText: "Pick Up Date"
-                                            )
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20,),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                        child: InkWell(
-                                          onTap: (){
-                                            paymentController.iniatePayment(
-                                                user.currentser.value!.uid,
-                                                product.price,
-                                                mobileNoController.text.toString()
-                                            );
-                                          },
-                                          child: Container(
-                                            height: 50,
-                                            width: double.maxFinite,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              color: primaryColorV1
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "Make Order",
-                                                style: TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }
-                            ),
+                            onTap: ()=>showBottomBar(context),
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Container(
@@ -365,6 +266,118 @@ class DescriptionPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<dynamic> showBottomBar(BuildContext context) {
+    return showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context){
+                              TextEditingController nameConroller=TextEditingController();
+                              TextEditingController townController=TextEditingController();
+                              TextEditingController mobileNoController=TextEditingController();
+                              TextEditingController dateController=TextEditingController();
+                              nameConroller.text=user.currentser.value!.name;
+                              mobileNoController.text=user.currentser.value!.mobileNo.toString();
+                              return Container(
+                                width: double.maxFinite,
+                                height: context.mediaQuery.size.height*0.6,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(12),
+                                    topLeft: Radius.circular(12)
+                                  )
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 10,),
+                                    Text("Place Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+                                    const SizedBox(height: 5,),
+                                    modalFormTittles("Your Name"),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: TextField(
+                                        controller: nameConroller,
+                                        decoration: InputDecoration(
+                                          hintText: "Name"
+                                        )
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    modalFormTittles("Delivery Adrress"),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: TextField(
+                                          controller: townController,
+                                          decoration: InputDecoration(
+                                              hintText: "Your Location"
+                                          )
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    modalFormTittles("Mobile No to make Payment"),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 5),
+                                      child: TextField(
+                                          controller: mobileNoController,
+                                          decoration: InputDecoration(
+                                              hintText: "No to Make Payment"
+                                          )
+                                      ),
+                                    ),
+                                    modalFormTittles("Pick Up Date"),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: TextField(
+                                          controller: dateController,
+                                          decoration: InputDecoration(
+                                              hintText: "Pick Up Date"
+                                          )
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: InkWell(
+                                        onTap: ()async{
+                                          PaymentResponse? paymentResponse= await paymentController.iniatePayment(
+                                              user.currentser.value!.uid,
+                                              product.price,
+                                              mobileNoController.text.toString()
+                                          );
+                                          if(paymentResponse==null){
+                                            customSnackBar("Check Mobile No and Try Again", context);
+                                          }
+                                          else{
+                                            ///bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
+
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          width: double.maxFinite,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: primaryColorV1
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "Make Order",
+                                              style: TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }
+                          );
   }
 
   Padding modalFormTittles(String text) {
