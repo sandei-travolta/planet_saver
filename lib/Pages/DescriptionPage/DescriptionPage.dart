@@ -123,10 +123,69 @@ class DescriptionPage extends StatelessWidget {
                                       const SizedBox(height: 10,),
                                       Text("Place Order",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
                                       const SizedBox(height: 5,),
-                                      TextField(
-                                        decoration: InputDecoration(
-                                          hintText: "Name"
-                                        )
+                                      modalFormTittles("Your Name"),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                        child: TextField(
+                                          controller: nameConroller,
+                                          decoration: InputDecoration(
+                                            hintText: "Name"
+                                          )
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      modalFormTittles("Delivery Adrress"),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                        child: TextField(
+                                            controller: townController,
+                                            decoration: InputDecoration(
+                                                hintText: "Your Location"
+                                            )
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      modalFormTittles("Mobile No to make Payment"),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 5),
+                                        child: TextField(
+                                            controller: mobileNoController,
+                                            decoration: InputDecoration(
+                                                hintText: "No to Make Payment"
+                                            )
+                                        ),
+                                      ),
+                                      modalFormTittles("Pick Up Date"),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                        child: TextField(
+                                            controller: dateController,
+                                            decoration: InputDecoration(
+                                                hintText: "Pick Up Date"
+                                            )
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20,),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                        child: Container(
+                                          height: 50,
+                                          width: double.maxFinite,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: primaryColorV1
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "Make Order",
+                                              style: TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -295,5 +354,17 @@ class DescriptionPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Padding modalFormTittles(String text) {
+    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(text),
+                                        ],
+                                      ),
+                                    );
   }
 }
