@@ -75,8 +75,12 @@ class UserController{
   }
 }
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> customSnackBar(String message,BuildContext context){
-  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),backgroundColor: Colors.red,));
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(message),backgroundColor: Colors.red,));
 }
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> successCustomSnackBar(String message,BuildContext context){
-  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),backgroundColor: primaryColorV1,));
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(message),backgroundColor: primaryColorV1,));
 }

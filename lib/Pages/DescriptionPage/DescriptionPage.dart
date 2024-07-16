@@ -350,7 +350,14 @@ class DescriptionPage extends StatelessWidget {
                                           }
                                           else{
                                             ///bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
-
+                                            await Future.delayed(Duration(seconds: 45)).then((value) => print("Executed Now"));
+                                            bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
+                                            if(paymentStatus){
+                                              successCustomSnackBar("😎😎😎",context);
+                                            }
+                                            else{
+                                              customSnackBar("Tafuta Pesa😂😂😂", context);
+                                            }
                                           }
                                         },
                                         child: Container(

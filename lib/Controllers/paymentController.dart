@@ -26,7 +26,7 @@ class PaymentController{
     }
   }
   Future<bool> paymentStatus(String checkoutId)async{
-    final url=Uri.parse("${tunnelUrl}/api/payment");
+    final url=Uri.parse("${tunnelUrl}/api/transactionStatus");
     final PaymentStatus paymentStatusModel=PaymentStatus(checkoutRequestId: checkoutId);
     final body=jsonEncode(paymentStatusModel.toJson());
     final headers={'Content-Type':'application/json'};
