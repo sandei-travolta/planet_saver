@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB2cxLVwxN8WVSmOh1X9NxcDJ8lHUzLdP4',
-    appId: '1:235195114436:android:18b7aa6ac0c96648e17a91',
-    messagingSenderId: '235195114436',
-    projectId: 'secondproject-2f852',
-    storageBucket: 'secondproject-2f852.appspot.com',
+    apiKey: 'AIzaSyBHvn3sfK7qdI4ZbmA8MOoIbi7EhgWviiE',
+    appId: '1:200598336480:android:82a119fda5384cfafa7185',
+    messagingSenderId: '200598336480',
+    projectId: 'planet-savers-a12fb',
+    storageBucket: 'planet-savers-a12fb.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDmzvHQMkaSELFtc1lVNppu8LOdiWQ9DZE',
+    appId: '1:200598336480:ios:6763f0690f9b5694fa7185',
+    messagingSenderId: '200598336480',
+    projectId: 'planet-savers-a12fb',
+    storageBucket: 'planet-savers-a12fb.appspot.com',
+    iosBundleId: 'com.example.planetSaver',
   );
 }

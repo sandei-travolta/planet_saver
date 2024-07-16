@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "235195114436",
-    "project_id": "secondproject-2f852",
-    "storage_bucket": "secondproject-2f852.appspot.com"
+    "project_number": "200598336480",
+    "project_id": "planet-savers-a12fb",
+    "storage_bucket": "planet-savers-a12fb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:235195114436:android:183c774e6ebb8a7ee17a91",
-        "android_client_info": {
-          "package_name": "com.example.learning_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB2cxLVwxN8WVSmOh1X9NxcDJ8lHUzLdP4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:235195114436:android:18b7aa6ac0c96648e17a91",
+        "mobilesdk_app_id": "1:200598336480:android:82a119fda5384cfafa7185",
         "android_client_info": {
           "package_name": "com.example.planet_saver"
         }
@@ -34,45 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB2cxLVwxN8WVSmOh1X9NxcDJ8lHUzLdP4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:235195114436:android:2015cd9386348882e17a91",
-        "android_client_info": {
-          "package_name": "com.example.qwiker_rider"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB2cxLVwxN8WVSmOh1X9NxcDJ8lHUzLdP4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:235195114436:android:7dd804dbf0474801e17a91",
-        "android_client_info": {
-          "package_name": "com.helloworld.com"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB2cxLVwxN8WVSmOh1X9NxcDJ8lHUzLdP4"
+          "current_key": "AIzaSyBHvn3sfK7qdI4ZbmA8MOoIbi7EhgWviiE"
         }
       ],
       "services": {
