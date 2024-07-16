@@ -6,11 +6,13 @@ import 'package:planet_saver/FireBase/ChatsFireBase.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 
 
+import '../../Controllers/paymentController.dart';
 import '../../Models/Product.dart';
 class DescriptionPage extends StatelessWidget {
    DescriptionPage({Key? key, required this.product}) : super(key: key);
   final Product product;
   final MessagingService messagingService=MessagingService();
+  final PaymentController paymentController=PaymentController();
   final user=Get.find<UserStateController>();
   @override
   Widget build(BuildContext context) {
@@ -168,20 +170,29 @@ class DescriptionPage extends StatelessWidget {
                                       const SizedBox(height: 20,),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                                        child: Container(
-                                          height: 50,
-                                          width: double.maxFinite,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            color: primaryColorV1
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Make Order",
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white
+                                        child: InkWell(
+                                          onTap: (){
+                                            paymentController.iniatePayment(
+                                                user.currentser.value!.uid,
+                                                product.price,
+                                                mobileNoController.text.toString()
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            width: double.maxFinite,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                              color: primaryColorV1
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "Make Order",
+                                                style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white
+                                                ),
                                               ),
                                             ),
                                           ),
