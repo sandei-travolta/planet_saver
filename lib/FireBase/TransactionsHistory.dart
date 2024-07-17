@@ -3,8 +3,9 @@ import 'package:planet_saver/Models/TransactionModel.dart';
 
 class TransactionHistory{
   FirebaseFirestore db=FirebaseFirestore.instance;
-  void saveTransaction(String date,int amount,String senderID,String receiverID,bool status)async{
+  void saveTransaction(String transactionID,String date,int amount,String senderID,String receiverID,bool status)async{
     TransactionModel transaction=TransactionModel(
+        transactionID: transactionID,
         date: date,
         amount: amount,
         senderID: senderID,

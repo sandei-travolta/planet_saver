@@ -4,18 +4,28 @@ import 'package:planet_saver/Models/orderModel.dart';
 class OrdersFireBase{
   FirebaseFirestore db=FirebaseFirestore.instance;
   void saveOrder(String orderTittle,int orderPrice,String orderDate,String datePlaced,String buyerId,String sellerId,bool status)async{
-
+    List<OrderModel> buyerOrders=await getOrders(buyerId);
+    List<OrderModel> sellerOrders=await getOrders(buyerId);
     OrderModel orderModel=OrderModel(
         orderTittle: orderTittle,
         orderPrice: orderPrice,
-        orderId: "",
+        orderId: "${buyerOrders.length}",
         orderDate: orderDate,
         datePlaced: datePlaced,
         buyerId: buyerId,
         sellerId: sellerId,
         status: status);
-    await db.collection("Users").doc(buyerId).collection("Orders").doc().set(orderModel.toJson());
-    await db.collection("Users").doc(sellerId).collection("Orders").doc().set(orderModel.toJson());
+    OrderModel sellerOrder=OrderModel(
+        orderTittle: orderTittle,
+        orderPrice: orderPrice,
+        orderId: "${sellerOrders.length}",
+        orderDate: orderDate,
+        datePlaced: datePlaced,
+        buyerId: buyerId,
+        sellerId: sellerId,
+        status: status);
+    await db.collection("Users").doc(buyerId).collection("Orders").doc(buyerOrders.toString()).set(orderModel.toJson());
+    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrder.toString()).set(orderModel.toJson());
   }
   Future<List<OrderModel>> getOrders(String uid)async{
     List<OrderModel> orders=[];
