@@ -5,7 +5,7 @@ class TransactionModel{
   final int amount;
   final String senderID;
   final String receiverID;
-  final String status;
+  final bool status;
 
   TransactionModel({required this.date, required this.amount, required this.senderID, required this.receiverID,required this.status});
   Map<String,dynamic> toJson()=>{
