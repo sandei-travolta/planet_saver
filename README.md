@@ -7,6 +7,7 @@ Final Year Project
 - Post Ads and also Pickup requests
 - Real-time messaging
 - Save images in Firestore
+- Mpesa Payment Intergration
 ## Packages
 - FirebaseAuth for Authentication
 - FirebaseFirestore as the database
