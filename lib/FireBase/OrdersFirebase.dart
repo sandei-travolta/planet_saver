@@ -40,4 +40,17 @@ class OrdersFireBase{
     }
     return orders;
   }
+  Future<List<OrderModel>> getDaysOrders(String uid,String date)async{
+    List<OrderModel> orders=[];
+    try{
+      QuerySnapshot querySnapshot=await db.collection("Users").doc(uid).collection("Orders").where('OrderDate',isEqualTo: date).get();
+      for(var doc in querySnapshot.docs){
+        OrderModel order=OrderModel.fromSnap(doc);
+        orders.add(order);
+      }
+    }catch(e){
+      print(e);
+    }
+    return orders;
+  }
 }
