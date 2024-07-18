@@ -24,8 +24,8 @@ class OrdersFireBase{
         buyerId: buyerId,
         sellerId: sellerId,
         status: status);
-    await db.collection("Users").doc(buyerId).collection("Orders").doc(buyerOrders.toString()).set(orderModel.toJson());
-    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrder.toString()).set(orderModel.toJson());
+    await db.collection("Users").doc(buyerId).collection("Orders").doc(buyerOrders.length.toString()).set(orderModel.toJson());
+    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrders.length.toString()).set(orderModel.toJson());
   }
   Future<List<OrderModel>> getOrders(String uid)async{
     List<OrderModel> orders=[];

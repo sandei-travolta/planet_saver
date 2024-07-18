@@ -372,12 +372,14 @@ class DescriptionPage extends StatelessWidget {
                                             await Future.delayed(Duration(seconds: 45)).then((value) => print("Executed Now"));
                                             bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
                                             if(paymentStatus){
+                                              print("payment status $paymentStatus");
                                               ordersFireBase.saveOrder(product.tittle, product.price, dateController.text, datePlaced, user.currentser.value!.uid,product.uid, false);
                                               transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false);
                                               print("Saved");
                                               successCustomSnackBar("😎😎😎",context);
                                             }
                                             else{
+                                              print("payment status $paymentStatus");
                                               customSnackBar("Tafuta Pesa😂😂😂", context);
                                             }
                                           }

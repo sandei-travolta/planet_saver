@@ -34,7 +34,7 @@ class PaymentController{
     if(response.statusCode==200){
       final Map<String,dynamic> responseBody=json.decode(response.body);
       final PaymentStatusResponse paymentStatusResponse=PaymentStatusResponse.fromJson(responseBody);
-      if(paymentStatusResponse.resultCode==0){
+      if(paymentStatusResponse.resultCode=="0"){
         return true;
       }
       return false;
