@@ -2,8 +2,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/FireBase/ChatsFireBase.dart';
+import 'package:planet_saver/FireBase/OrdersFirebase.dart';
+import 'package:planet_saver/FireBase/TransactionsHistory.dart';
 import 'package:planet_saver/Models/PaymentResponse.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 
@@ -276,6 +279,7 @@ class DescriptionPage extends StatelessWidget {
                               TextEditingController townController=TextEditingController();
                               TextEditingController mobileNoController=TextEditingController();
                               TextEditingController dateController=TextEditingController();
+                              String datePlaced="";
                               nameConroller.text=user.currentser.value!.name;
                               mobileNoController.text=user.currentser.value!.mobileNo.toString();
                               return Container(
@@ -329,10 +333,23 @@ class DescriptionPage extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                       child: TextField(
+                                          readOnly: true,
                                           controller: dateController,
                                           decoration: InputDecoration(
                                               hintText: "Pick Up Date"
-                                          )
+                                          ),
+                                        onTap: ()async{
+                                            DateTime? pickedDate=await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime.now(),
+                                                lastDate: DateTime(2025)
+                                            );
+                                            if(pickedDate!=null){
+                                              String formattedDate=DateFormat("dd-MM-yyyy").format(pickedDate);
+                                              dateController.text=formattedDate;
+                                            }
+                                      },
                                       ),
                                     ),
                                     const SizedBox(height: 20,),
@@ -340,9 +357,11 @@ class DescriptionPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                                       child: InkWell(
                                         onTap: ()async{
+                                          OrdersFireBase ordersFireBase=OrdersFireBase();
+                                          TransactionHistory transactionHistory=TransactionHistory();
                                           PaymentResponse? paymentResponse= await paymentController.iniatePayment(
                                               user.currentser.value!.uid,
-                                              product.price,
+                                              1,
                                               mobileNoController.text.toString()
                                           );
                                           if(paymentResponse==null){
@@ -353,6 +372,9 @@ class DescriptionPage extends StatelessWidget {
                                             await Future.delayed(Duration(seconds: 45)).then((value) => print("Executed Now"));
                                             bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
                                             if(paymentStatus){
+                                              ordersFireBase.saveOrder(product.tittle, product.price, dateController.text, datePlaced, user.currentser.value!.uid,product.uid, false);
+                                              transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false);
+                                              print("Saved");
                                               successCustomSnackBar("😎😎😎",context);
                                             }
                                             else{
