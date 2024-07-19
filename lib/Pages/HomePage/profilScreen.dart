@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:planet_saver/Controllers/image_picker.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/Pages/ProfilePageScreens/myAdsPage.dart';
+import 'package:planet_saver/Pages/ProfilePageScreens/walletPage.dart';
 
 import '../ProfilePageScreens/MyOrdersPage.dart';
 import '../Widgets/colors.dart';
@@ -12,7 +14,7 @@ import '../Widgets/profile_info_tabs_widget.dart';
 import '../Widgets/profile_text_widgets.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
-  PickImage _pickImage=PickImage();
+  final PickImage _pickImage=PickImage();
   final userController = Get.find<UserStateController>();
   @override
   Widget build(BuildContext context) {
@@ -91,15 +93,21 @@ class ProfileScreen extends StatelessWidget {
                       tittle: "Profile",
                       subtitle: "Edit your Profile",
                     ),
-                    UserInfoTabs(
-                      icon: Icon(Icons.monetization_on_sharp),
-                      tittle: "Wallet",
-                      subtitle: "Make Transactions",
+                    InkWell(
+                      onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>WalletPage())),
+                      child: UserInfoTabs(
+                        icon: Icon(Icons.monetization_on_sharp),
+                        tittle: "Wallet",
+                        subtitle: "Make Transactions",
+                      ),
                     ),
-                    UserInfoTabs(
-                      icon: Icon(Icons.bookmark),
-                      tittle: "Ads",
-                      subtitle: "Your Posted Ads",
+                    InkWell(
+                      onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>MyAdsPage())),
+                      child: UserInfoTabs(
+                        icon: Icon(Icons.bookmark),
+                        tittle: "Ads",
+                        subtitle: "Your Posted Ads",
+                      ),
                     ),
                     InkWell(
                       onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>MyOrdersPage())),
