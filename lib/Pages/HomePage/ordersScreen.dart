@@ -72,11 +72,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
         Expanded(
             flex: 11,
             child: Container(
-              /*child: Text("No orders set for ${formattedDate}",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),*/
               child: orders.isEmpty
                   ? Center(child:Text("No orders set for ${formattedDate}",
                 style: TextStyle(
@@ -88,7 +83,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     OrderModel orderModel=orders[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
-                  child: OrdersCard(orderModel: orderModel),
+                  child: OrdersCard(orderModel: orderModel,currentUser: stateController.currentser.value,),
                 );
               }),
             ))
