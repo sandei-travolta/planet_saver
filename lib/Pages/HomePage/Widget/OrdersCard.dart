@@ -21,14 +21,22 @@ class OrdersCard extends StatelessWidget {
         children: [
           Row(
             children: [
+              Text("Order Tittle:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800,color: Colors.grey),),
+              const SizedBox(width: 5,),
               Text(orderModel.orderTittle,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),)
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(orderModel.orderDate,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-              Text("${orderModel.orderPrice}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
+              Row(
+                children: [
+                  Text("Order Date:",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w800,color: Colors.grey),),
+                  const SizedBox(width: 5,),
+                  Text(orderModel.orderDate,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                ],
+              ),
+              Text("${orderModel.orderPrice}  Ksh",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
             ],
           ),
           const SizedBox(height: 3,),
