@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:planet_saver/Controllers/image_picker.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
 
+import '../ProfilePageScreens/MyOrdersPage.dart';
 import '../Widgets/colors.dart';
 import '../Widgets/profile_info_tabs_widget.dart';
 import '../Widgets/profile_text_widgets.dart';
@@ -100,10 +101,13 @@ class ProfileScreen extends StatelessWidget {
                       tittle: "Ads",
                       subtitle: "Your Posted Ads",
                     ),
-                    UserInfoTabs(
-                      icon: Icon(Icons.history),
-                      tittle: "Orders",
-                      subtitle: "Order Historiy",
+                    InkWell(
+                      onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>MyOrdersPage())),
+                      child: UserInfoTabs(
+                        icon: Icon(Icons.history),
+                        tittle: "Orders",
+                        subtitle: "Order Historiy",
+                      ),
                     ),
                     InkWell(
                       onTap: (){

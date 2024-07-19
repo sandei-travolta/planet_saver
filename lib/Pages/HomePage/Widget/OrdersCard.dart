@@ -80,7 +80,23 @@ class _OrdersCardState extends State<OrdersCard> {
               ),
               const SizedBox(height: 15,),
               Expanded(
-                  child: Container(
+                  child:widget.currentUser!.uid==widget.orderModel.sellerId?
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: primaryColorV2
+                    ),
+                    child: Center(
+                        child: Text(widget.orderModel.status==true?"Order Complete" :"Order Pending",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white
+                          ),)
+                    ),
+                  )
+                      :
+                  Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: primaryColorV1
