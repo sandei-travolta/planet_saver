@@ -27,12 +27,12 @@ class OrderModel{
     return OrderModel(
         orderTittle:snapShot['OrderTittle'],
         orderPrice: snapShot['OrderPrice'],
-        orderId: snapShot['OrderId'],
+        orderId: snapShot['OrderID'],
         orderDate: snapShot['OrderDate'],
         datePlaced: snapShot['DatePlaced'],
         buyerId:snapShot['BuyerId'],
-        sellerId: snapShot['sellerId'],
-        status: snapShot['status']
+        sellerId: snapShot['SellerId'],
+        status: snapShot['Status']
     );
   }
 }

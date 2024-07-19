@@ -1,14 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/FireBase/OrdersFirebase.dart';
+import 'package:planet_saver/Models/orderModel.dart';
 
 import '../Widgets/colors.dart';
-class OrdersScreen extends StatelessWidget {
+import 'Widget/OrdersCard.dart';
+class OrdersScreen extends StatefulWidget {
   OrdersScreen({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  OrdersFireBase ordersFireBase=OrdersFireBase();
+  List<OrderModel> orders=[];
+  late var formattedDate;
+  late var queryDate;
+  final stateController=Get.find<UserStateController>();
+  void fetchOrders()async{
+    orders=await ordersFireBase.getDaysOrders(stateController.currentser.value!.uid,queryDate);
+    setState(() {});
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);
-    var formattedDate= DateFormat.yMMMd().format(date);
+    formattedDate= DateFormat.yMMMd().format(date);
+    queryDate=DateFormat("dd-MM-yyyy").format(date);
+    fetchOrders();
+  }
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -50,58 +77,18 @@ class OrdersScreen extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),*/
-              child: ListView.builder(
-                  itemCount: 3,
-                  itemBuilder: (ontext,index){
+              child: orders.isEmpty
+                  ? Center(child:Text("No orders set for ${formattedDate}",
+                style: TextStyle(
+                  fontSize: 18,
+                )))
+                  :ListView.builder(
+                  itemCount: orders.length,
+                  itemBuilder: (context,index){
+                    OrderModel orderModel=orders[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey.withOpacity(0.3)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text("Order-Tittle",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Order-price",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                            Text("Order-Date",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
-                          ],
-                        ),
-                        const SizedBox(height: 3,),
-                        Row(
-                          children: [
-                            Text("Seller",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),)
-                          ],
-                        ),
-                        const SizedBox(height: 15,),
-                        Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: primaryColorV1
-                              ),
-                              child: Center(
-                                child: Text("Marks Order Complete",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white
-                                ),)
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
+                  child: OrdersCard(orderModel: orderModel),
                 );
               }),
             ))
@@ -109,3 +96,4 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 }
+

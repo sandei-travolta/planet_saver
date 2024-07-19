@@ -5,7 +5,7 @@ class OrdersFireBase{
   FirebaseFirestore db=FirebaseFirestore.instance;
   void saveOrder(String orderTittle,int orderPrice,String orderDate,String datePlaced,String buyerId,String sellerId,bool status)async{
     List<OrderModel> buyerOrders=await getOrders(buyerId);
-    List<OrderModel> sellerOrders=await getOrders(buyerId);
+    List<OrderModel> sellerOrders=await getOrders(sellerId);
     OrderModel orderModel=OrderModel(
         orderTittle: orderTittle,
         orderPrice: orderPrice,
@@ -25,16 +25,19 @@ class OrdersFireBase{
         sellerId: sellerId,
         status: status);
     await db.collection("Users").doc(buyerId).collection("Orders").doc(buyerOrders.length.toString()).set(orderModel.toJson());
-    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrders.length.toString()).set(orderModel.toJson());
+    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrders.length.toString()).set(sellerOrder.toJson());
   }
   Future<List<OrderModel>> getOrders(String uid)async{
     List<OrderModel> orders=[];
     try{
       QuerySnapshot querySnapshot=await db.collection("Users").doc(uid).collection("Orders").get();
+      print("getting Orders");
       for(var doc in querySnapshot.docs){
         OrderModel order=OrderModel.fromSnap(doc);
         orders.add(order);
       }
+      print("Gots Order");
+      print("number of apparent orders${orders.length}");
     }catch(e){
       print(e);
     }
