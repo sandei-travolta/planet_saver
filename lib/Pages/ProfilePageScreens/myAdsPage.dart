@@ -19,11 +19,15 @@ class MyAdsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("My Wallet",style: TextStyle(fontSize: 30,fontFamily: "PoppinsBold"),),
+                      Text("My Ads",style: TextStyle(fontSize: 30,fontFamily: "PoppinsBold"),),
                     ],
                   ),
                 )
             ),
+            Expanded(
+              flex: 14,
+                child: Container(
+                ))
           ],
         ),
       ),
