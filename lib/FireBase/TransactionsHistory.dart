@@ -13,7 +13,7 @@ class TransactionHistory{
         status: status
     );
     await db.collection("Users").doc(senderID).collection("Transactions").doc().set(transaction.toJson());
-    await db.collection("Users").doc(receiverID).collection("Transactions").doc().set(transaction.toJson());
+    ///await db.collection("Users").doc(receiverID).collection("Transactions").doc().set(transaction.toJson());
   }
   Future<List<TransactionModel>> getTransactions(String uid)async{
     List<TransactionModel> transactionsHistory=[];

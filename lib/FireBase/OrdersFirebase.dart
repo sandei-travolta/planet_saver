@@ -4,33 +4,22 @@ import 'package:planet_saver/Models/orderModel.dart';
 class OrdersFireBase{
   FirebaseFirestore db=FirebaseFirestore.instance;
   void saveOrder(String orderTittle,int orderPrice,String orderDate,String datePlaced,String buyerId,String sellerId,bool status)async{
-    List<OrderModel> buyerOrders=await getOrders(buyerId);
-    List<OrderModel> sellerOrders=await getOrders(sellerId);
+    List<OrderModel> ordersLenght=await getOrders();
     OrderModel orderModel=OrderModel(
         orderTittle: orderTittle,
         orderPrice: orderPrice,
-        orderId: "${buyerOrders.length}",
+        orderId: "${ordersLenght.length}",
         orderDate: orderDate,
         datePlaced: datePlaced,
         buyerId: buyerId,
         sellerId: sellerId,
         status: status);
-    OrderModel sellerOrder=OrderModel(
-        orderTittle: orderTittle,
-        orderPrice: orderPrice,
-        orderId: "${sellerOrders.length}",
-        orderDate: orderDate,
-        datePlaced: datePlaced,
-        buyerId: buyerId,
-        sellerId: sellerId,
-        status: status);
-    await db.collection("Users").doc(buyerId).collection("Orders").doc(buyerOrders.length.toString()).set(orderModel.toJson());
-    await db.collection("Users").doc(sellerId).collection("Orders").doc(sellerOrders.length.toString()).set(sellerOrder.toJson());
+    await db.collection("Orders").doc(ordersLenght.length.toString()).set(orderModel.toJson());
   }
-  Future<List<OrderModel>> getOrders(String uid)async{
+  Future<List<OrderModel>> getOrders()async{
     List<OrderModel> orders=[];
     try{
-      QuerySnapshot querySnapshot=await db.collection("Users").doc(uid).collection("Orders").get();
+      QuerySnapshot querySnapshot=await db.collection("Orders").get();
       print("getting Orders");
       for(var doc in querySnapshot.docs){
         OrderModel order=OrderModel.fromSnap(doc);
@@ -43,6 +32,7 @@ class OrdersFireBase{
     }
     return orders;
   }
+  ///Future<bool> markOrderComplete()async
   Future<List<OrderModel>> getDaysOrders(String uid,String date)async{
     List<OrderModel> orders=[];
     try{
