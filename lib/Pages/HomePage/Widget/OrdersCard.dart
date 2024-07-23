@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/Models/orderModel.dart';
 
 import '../../../Controllers/user_controller.dart';
@@ -17,6 +18,8 @@ class OrdersCard extends StatefulWidget {
 }
 
 class _OrdersCardState extends State<OrdersCard> {
+
+  OrdersFireBase ordersFireBase=OrdersFireBase();
   Future<UserModel?> _returnUser(String id) async {
     UserController userController = UserController();
     UserModel? userModel = await userController.getCurrentUser(id);
@@ -97,17 +100,42 @@ class _OrdersCardState extends State<OrdersCard> {
                   )
                       :
                   Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: primaryColorV1
-                    ),
-                    child: Center(
-                        child: Text("Marks Order Complete",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white
-                          ),)
+                    child: widget.orderModel.status?Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: primaryColorV1
+                      ),
+                      child: Center(
+                          child: Text("Order Complete",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white
+                            ),)
+                      ),
+                    ):
+                    InkWell(
+                      onTap: ()async{
+                        bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
+                        print(updated);
+                        setState(() {
+
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: primaryColorV1
+                        ),
+                        child: Center(
+                            child: Text("Marks Order Complete",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white
+                              ),)
+                        ),
+                      ),
                     ),
                   ))
             ],

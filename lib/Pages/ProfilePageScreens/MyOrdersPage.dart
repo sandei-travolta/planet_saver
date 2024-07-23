@@ -24,7 +24,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     fetchOrders();
   }
   void fetchOrders()async{
-    orders=await ordersFireBase.getOrders();
+    orders=await ordersFireBase.getUsersOrders(user.currentser.value!.uid);
     setState(() {});
   }
   @override
