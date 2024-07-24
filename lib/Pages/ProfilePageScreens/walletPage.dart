@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/FireBase/balanceController.dart';
+import 'package:planet_saver/Models/BalanceModel.dart';
 
 import '../Widgets/colors.dart';
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
 
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
+  BalanceController balanceController=BalanceController();
+  final user=Get.find<UserStateController>().currentser.value;
+  int? balance=0;
+  @override
+  void initState() {
+    super.initState();
+    getBalance();
+  }
+  void getBalance()async{
+    BalanceModel? balanceModel=await balanceController.fetchBalance(user!.uid);
+    balance=balanceModel!.amount;
+    setState(() {
+    });
+    print(balanceModel!.amount);
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,7 +66,7 @@ class WalletPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("100",
+                            Text(balance.toString(),
                               style: TextStyle
                                 (
                               fontSize: 30,
