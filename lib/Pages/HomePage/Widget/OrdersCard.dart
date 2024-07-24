@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
+import 'package:planet_saver/FireBase/TransactionsHistory.dart';
+import 'package:planet_saver/FireBase/balanceController.dart';
 import 'package:planet_saver/Models/orderModel.dart';
 
 import '../../../Controllers/user_controller.dart';
@@ -20,11 +22,14 @@ class OrdersCard extends StatefulWidget {
 class _OrdersCardState extends State<OrdersCard> {
 
   OrdersFireBase ordersFireBase=OrdersFireBase();
+  TransactionHistory transactionHistory=TransactionHistory();
+  BalanceController balanceController=BalanceController();
   Future<UserModel?> _returnUser(String id) async {
     UserController userController = UserController();
     UserModel? userModel = await userController.getCurrentUser(id);
     return userModel;
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
@@ -117,6 +122,8 @@ class _OrdersCardState extends State<OrdersCard> {
                     InkWell(
                       onTap: ()async{
                         bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
+                        balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
+                        transactionHistory.saveTransaction(widget.orderModel.orderId,"current-Date", widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
                         print(updated);
                         setState(() {
 

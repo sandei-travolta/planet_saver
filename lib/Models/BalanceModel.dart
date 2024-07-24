@@ -6,6 +6,6 @@ class BalanceModel{
   BalanceModel({required this.amount});
   static BalanceModel fromSnap(DocumentSnapshot documentSnapshot){
     var snap=documentSnapshot.data() as Map<String,dynamic>;
-    return BalanceModel(amount: snap["Amount"]);
+    return BalanceModel(amount: snap["Balance"]);
   }
 }

@@ -374,7 +374,7 @@ class DescriptionPage extends StatelessWidget {
                                             if(paymentStatus){
                                               print("payment status $paymentStatus");
                                               ordersFireBase.saveOrder(product.tittle, product.price, dateController.text, datePlaced, user.currentser.value!.uid,product.uid, false);
-                                              transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false);
+                                              transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false,user.currentser.value!.uid);
                                               print("Saved");
                                               successCustomSnackBar("😎😎😎",context);
                                             }
