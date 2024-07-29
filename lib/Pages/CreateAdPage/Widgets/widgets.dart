@@ -60,6 +60,32 @@ class NumeralInputFiedsAd extends StatelessWidget {
     );
   }
 }
+class PriceInputFiedsAd extends StatelessWidget {
+  const PriceInputFiedsAd({
+    super.key,
+    required this.titleController, required this.hintText, required this.labelText,
+  });
+
+  final TextEditingController titleController;
+  final String hintText;
+  final String labelText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 8),
+      child: TextFormField(
+        readOnly: true,
+        keyboardType: TextInputType.number,
+        controller: titleController,
+        decoration: InputDecoration(
+            hintText: hintText,
+            labelText: labelText
+        ),
+      ),
+    );
+  }
+}
 class UploadImagesWidget extends StatefulWidget {
    UploadImagesWidget({
     super.key,

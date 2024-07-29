@@ -26,11 +26,12 @@ class _RequestPickUpState extends State<RequestPickUp> {
   TextEditingController regionController=TextEditingController();
   String dropdownvalue = 'cans';
   bool isLoading=false;
+  var price=0.0;
   final user=Get.find<UserStateController>();
   final AdsCloudFireStore saveAd=AdsCloudFireStore();
-
   @override
   Widget build(BuildContext context) {
+    priceController.text=price.toString();
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
@@ -50,15 +51,26 @@ class _RequestPickUpState extends State<RequestPickUp> {
                 hintText: 'What are You Selling ?',
                 labelText: 'Product Tittle',
               ),
-              NumeralInputFiedsAd(
+              PriceInputFiedsAd(
                 titleController: priceController,
                 hintText: 'Set The price',
                 labelText: 'Product price',
               ),
-              NumeralInputFiedsAd(
-                titleController: weightController,
-                hintText: 'Weight(kG)',
-                labelText: 'Product Weight',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 8),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: weightController,
+                  decoration: InputDecoration(
+                      hintText: 'Weight(kG)',
+                      labelText: 'Product Weight(30ksh/kg)',
+                  ),
+                  onChanged: (value){
+                    double weight=double.parse(value);
+                    price=weight*30.0;
+                    priceController.text=price.toString();
+                  },
+                ),
               ),
               InputFiedsAd(
                 titleController: descriptionController,
@@ -129,7 +141,7 @@ class _RequestPickUpState extends State<RequestPickUp> {
                     }
                   },
                   decoration: InputDecoration(
-                    hintText: "Select Category",
+                    hintText: "Select Region",
                   ),
                 ),
               ),

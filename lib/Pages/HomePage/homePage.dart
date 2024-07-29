@@ -26,18 +26,20 @@ class _HomePageState extends State<HomePage> {
      ProfileScreen(),
    ];
    final stateController=Get.find<UserStateController>();
+
   @override
   Widget build(BuildContext context) {
+    final user=stateController.currentser.value;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: Obx(
           ()=>FloatingActionButton.extended(onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>stateController.currentSelection.value==0?CreateAd():RequestPickUp()));
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>stateController.currentSelection.value==0?CreateAd():RequestPickUp()));
         }, label: Text(
          stateController.currentSelection.value==0?"Sell":"PickUp",
           style: TextStyle(
-            fontSize: 18
+            fontSize: 18,
           ),
         ),
           icon: Icon(
