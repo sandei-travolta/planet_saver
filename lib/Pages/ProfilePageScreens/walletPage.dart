@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/FireBase/TransactionsHistory.dart';
 import 'package:planet_saver/FireBase/balanceController.dart';
 import 'package:planet_saver/Models/BalanceModel.dart';
+import 'package:planet_saver/Models/TransactionModel.dart';
 
 import '../Widgets/colors.dart';
 class WalletPage extends StatefulWidget {
@@ -14,19 +16,25 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   BalanceController balanceController=BalanceController();
+  TransactionHistory transactionHistory=TransactionHistory();
   final user=Get.find<UserStateController>().currentser.value;
+  List<TransactionModel> transactions=[];
   int? balance=0;
   @override
   void initState() {
     super.initState();
     getBalance();
+    getTransactions();
+    setState(() {
+
+    });
   }
   void getBalance()async{
     BalanceModel? balanceModel=await balanceController.fetchBalance(user!.uid);
     balance=balanceModel!.amount;
-    setState(() {
-    });
-    print(balanceModel!.amount);
+  }
+  void getTransactions()async{
+    transactions=await transactionHistory.getTransactions(user!.uid);
   }
   @override
   Widget build(BuildContext context) {
@@ -124,17 +132,22 @@ class _WalletPageState extends State<WalletPage> {
                 flex: 9,
                 child: Container(
                   child: ListView.builder(
-                      itemCount: 3,
+                      itemCount: transactions.length,
                       itemBuilder: (context,index){
+                        TransactionModel transaction=transactions[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 10),
                       child: Container(
-                        height: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Colors.black12
+                          color: Colors.grey
                         ),
-                      ),
+                        child: ListTile(
+                          leading: Text("Date: ${transaction.date}"),
+                          title:Text("${transaction.amount} Ksh"),
+                          subtitle: Text(transaction.senderID==user!.uid?"Sent":"Received"),
+                        ),
+                      )
                     );
                   }),
                 ))

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:planet_saver/Models/BalanceModel.dart';
+import 'package:planet_saver/Models/TransactionModel.dart';
 
 class BalanceController{
   FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
