@@ -55,7 +55,6 @@ class AdsCloudFireStore{
     } catch (e) {
       print('Error fetching products: $e');
     }
-
     return products;
   }
   Future<List<Product>> fetchUsersAds(String uid) async {
