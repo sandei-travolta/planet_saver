@@ -3,7 +3,7 @@ import 'package:planet_saver/Models/orderModel.dart';
 
 class OrdersFireBase{
   FirebaseFirestore db=FirebaseFirestore.instance;
-  void saveOrder(String orderTittle,int orderPrice,String orderDate,String datePlaced,String buyerId,String sellerId,bool status)async{
+  void saveOrder(String orderTittle,int orderPrice,String orderDate,String datePlaced,String buyerId,String sellerId,bool status,bool isDisposal)async{
     List<OrderModel> ordersLenght=await getOrders();
     OrderModel orderModel=OrderModel(
         orderTittle: orderTittle,
@@ -13,7 +13,9 @@ class OrdersFireBase{
         datePlaced: datePlaced,
         buyerId: buyerId,
         sellerId: sellerId,
-        status: status);
+        status: status,
+        isDisposal: isDisposal
+    );
     await db.collection("Orders").doc(ordersLenght.length.toString()).set(orderModel.toJson());
   }
   

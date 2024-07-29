@@ -9,8 +9,9 @@ class OrderModel{
   final String buyerId;
   final String sellerId;
   final bool status;
+  final bool isDisposal;
 
-  OrderModel({required this.orderTittle,required this.orderPrice,required this.orderId, required this.orderDate, required this.datePlaced,required this.buyerId, required this.sellerId,required this.status});
+  OrderModel({required this.orderTittle,required this.orderPrice,required this.orderId, required this.orderDate, required this.datePlaced,required this.buyerId, required this.sellerId,required this.status,required this.isDisposal});
 
   Map<String,dynamic> toJson()=>{
     "OrderTittle":orderTittle,
@@ -20,7 +21,8 @@ class OrderModel{
     "DatePlaced":datePlaced,
     "BuyerId":buyerId,
     "SellerId":sellerId,
-    "Status":status
+    "Status":status,
+    "IsDisposal":isDisposal
   };
   static OrderModel fromSnap(DocumentSnapshot documentSnapshot){
     var snapShot=documentSnapshot.data() as Map<String,dynamic>;
@@ -32,7 +34,8 @@ class OrderModel{
         datePlaced: snapShot['DatePlaced'],
         buyerId:snapShot['BuyerId'],
         sellerId: snapShot['SellerId'],
-        status: snapShot['Status']
+        status: snapShot['Status'],
+        isDisposal: snapShot['IsDisposal']
     );
   }
 }

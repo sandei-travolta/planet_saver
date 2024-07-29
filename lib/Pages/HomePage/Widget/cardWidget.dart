@@ -1,22 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:planet_saver/Controllers/user_statemanager.dart';
 
 import '../../../Models/Product.dart';
 import '../../DescriptionPage/DescriptionPage.dart';
+import '../../DescriptionPage/PickUpDescriptionPage.dart';
 import '../../Widgets/colors.dart';
 class AdCard extends StatelessWidget {
-  const AdCard({
+  AdCard({
     super.key,
     required this.product,
   });
 
   final Product product;
+  final pageSelected=Get.find<UserStateController>().currentSelection.value;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context,MaterialPageRoute(builder: (_)=>DescriptionPage(product: product)));
+        Navigator.push(context,MaterialPageRoute(builder: (_)=>pageSelected==0?DescriptionPage(product: product):PickUpDescriptionPage(product: product)));
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),

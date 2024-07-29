@@ -29,7 +29,7 @@ class _RequestPickUpState extends State<RequestPickUp> {
   TextEditingController dateController=TextEditingController();
   String dropdownvalue = 'cans';
   bool isLoading=false;
-  var price=0.0;
+  var price=0;
   final user=Get.find<UserStateController>();
   final AdsCloudFireStore saveAd=AdsCloudFireStore();
   @override
@@ -70,8 +70,8 @@ class _RequestPickUpState extends State<RequestPickUp> {
                         labelText: 'Product Weight(30ksh/kg)',
                     ),
                     onChanged: (value){
-                      double weight=double.parse(value);
-                      price=weight*30.0;
+                      int weight=int.parse(value);
+                      price=weight*30;
                       priceController.text=price.toString();
                     },
                   ),

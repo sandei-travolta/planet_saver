@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:planet_saver/Controllers/paymentController.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/FireBase/TransactionsHistory.dart';
 import 'package:planet_saver/FireBase/balanceController.dart';
+import 'package:planet_saver/Models/Product.dart';
 import 'package:planet_saver/Models/orderModel.dart';
 
 import '../../../Controllers/user_controller.dart';
+import '../../../Models/PaymentResponse.dart';
 import '../../../Models/user_model.dart';
 import '../../Widgets/colors.dart';
 class OrdersCard extends StatefulWidget {
@@ -24,6 +27,8 @@ class _OrdersCardState extends State<OrdersCard> {
   OrdersFireBase ordersFireBase=OrdersFireBase();
   TransactionHistory transactionHistory=TransactionHistory();
   BalanceController balanceController=BalanceController();
+  TextEditingController mobileNoController=TextEditingController();
+  PaymentController paymentController=PaymentController();
   Future<UserModel?> _returnUser(String id) async {
     UserController userController = UserController();
     UserModel? userModel = await userController.getCurrentUser(id);
@@ -32,6 +37,7 @@ class _OrdersCardState extends State<OrdersCard> {
 
   @override
   Widget build(BuildContext context) {
+    mobileNoController.text=widget.currentUser!.mobileNo.toString();
     return FutureBuilder<UserModel?>(
       future:_returnUser(widget.orderModel.sellerId),
       builder: (context,userSnapshot) {
@@ -120,7 +126,62 @@ class _OrdersCardState extends State<OrdersCard> {
                       ),
                     ):
                     InkWell(
-                      onTap: ()async{
+                      onTap: widget.orderModel.isDisposal?()=>showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Mark Order Complete'),
+                            content: TextField(
+                              decoration: InputDecoration(
+                                hintText: "Mobile No",
+
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () async {
+                                  PaymentResponse? paymentResponse= await paymentController.iniatePayment(
+                                      widget.currentUser!.uid,
+                                      widget.orderModel.orderPrice,
+                                      mobileNoController.text.toString()
+                                  );
+                                  if(paymentResponse==null){
+                                    customSnackBar("Check Mobile No and Try Again", context);
+                                  }
+                                  else{
+                                    ///bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
+                                    await Future.delayed(Duration(seconds: 45)).then((value) => print("Executed Now"));
+                                    bool paymentStatus=await paymentController.paymentStatus(paymentResponse.checkoutRequestId);
+                                    if(paymentStatus){
+                                      OrderModel product=widget.orderModel;
+                                      print("payment status $paymentStatus");
+                                      transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,"current-Date",product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.orderModel.sellerId);
+                                      bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
+                                      balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
+                                      transactionHistory.saveTransaction(widget.orderModel.orderId,"current-Date", widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
+                                      print("Saved");
+                                      successCustomSnackBar("😎😎😎",context);
+                                    }
+                                    else{
+                                      print("payment status $paymentStatus");
+                                      customSnackBar("Tafuta Pesa😂😂😂", context);
+                                    }
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Cancle'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ):
+                          ()async{
                         bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
                         balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
                         transactionHistory.saveTransaction(widget.orderModel.orderId,"current-Date", widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
