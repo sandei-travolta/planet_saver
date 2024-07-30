@@ -107,8 +107,21 @@ class AdsCloudFireStore{
       return false;
     }
   }
-  Future<bool> updatproductStatus()async{
-    return false;
+  Future<bool> updatproductStatus(String uid)async{
+    try{
+      await _firebaseFirestore.doc(uid).update({"status":true});
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+  Future<bool> updateDisposalStatus(String uid)async{
+    try{
+      await _disposalCollection.doc(uid).update({"Status":true});
+      return true;
+    }catch(e){
+      return false;
+    }
   }
 }
 String idGenerator() {
