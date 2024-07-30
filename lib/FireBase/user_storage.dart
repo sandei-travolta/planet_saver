@@ -35,3 +35,6 @@ class UserStorage{
     }
   }
 }
+/*
+- set rle selection on registration
+ */
