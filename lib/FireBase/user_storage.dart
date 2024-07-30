@@ -20,6 +20,18 @@ class UserStorage{
     }
   }
   Future<void> updateProfileImage(String imgUrl,String uid)async{
-    firebaseFirestore.doc(uid).update({"imgUrl":imgUrl});
+    await firebaseFirestore.doc(uid).update({"imgUrl":imgUrl});
+  }
+  Future<bool> updateUserPofile(String name,String mobileNo,String role,String uid)async{
+    try{
+      await firebaseFirestore.doc(uid).update({
+        "name":name,
+        "mobileNo":mobileNo,
+        "role":role
+      });
+      return true;
+    }catch(e){
+      return false;
+    }
   }
 }
