@@ -98,10 +98,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    UserInfoTabs(
-                      icon: Icon(Icons.person),
-                      tittle: "Profile",
-                      subtitle: "Edit your Profile",
+                    InkWell(
+                      onTap: ()=>showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          TextEditingController nameController=TextEditingController();
+                          TextEditingController mobileNoConntroller=TextEditingController();
+                          nameController.text=userController.currentser.value!.name;
+                          mobileNoConntroller.text=userController.currentser.value!.mobileNo.toString();
+                          return AlertDialog(
+                            title: Text('Edit Profile'),
+                            content: Container(
+                              height: 200,
+                              child: Column(
+                                children: [
+                                  TextField(
+                                    controller: nameController,
+                                  ),
+                                  const SizedBox(),
+                                  TextField(
+                                    controller: mobileNoConntroller,
+                                  )
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      child: UserInfoTabs(
+                        icon: Icon(Icons.person),
+                        tittle: "Profile",
+                        subtitle: "Edit your Profile",
+                      ),
                     ),
                     InkWell(
                       onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>WalletPage())),
