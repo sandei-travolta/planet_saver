@@ -7,6 +7,7 @@ import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/FireBase/ChatsFireBase.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/FireBase/TransactionsHistory.dart';
+import 'package:planet_saver/FireBase/ads_storage.dart';
 import 'package:planet_saver/Models/PaymentResponse.dart';
 import 'package:planet_saver/Pages/Widgets/colors.dart';
 
@@ -375,6 +376,7 @@ class DescriptionPage extends StatelessWidget {
                                               print("payment status $paymentStatus");
                                               ordersFireBase.saveOrder(product.tittle, product.price, dateController.text, datePlaced, user.currentser.value!.uid,product.uid, false,false);
                                               transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false,user.currentser.value!.uid);
+                                              await AdsCloudFireStore().updatproductStatus(product.productId);
                                               print("Saved");
                                               successCustomSnackBar("😎😎😎",context);
                                             }

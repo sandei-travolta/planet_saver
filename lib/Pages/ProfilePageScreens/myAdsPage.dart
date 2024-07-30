@@ -118,6 +118,9 @@ class _MyAdsPageState extends State<MyAdsPage> {
                                       ],
                                     ),
                                   )),
+                              IconButton(onPressed: (){
+                                adsController.deleteAd(product.productId);
+                              }, icon: Icon(Icons.delete))
                             ],
                           ),
                         ),

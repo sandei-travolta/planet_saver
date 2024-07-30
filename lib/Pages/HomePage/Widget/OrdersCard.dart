@@ -23,7 +23,6 @@ class OrdersCard extends StatefulWidget {
 }
 
 class _OrdersCardState extends State<OrdersCard> {
-
   OrdersFireBase ordersFireBase=OrdersFireBase();
   TransactionHistory transactionHistory=TransactionHistory();
   BalanceController balanceController=BalanceController();
@@ -56,7 +55,6 @@ class _OrdersCardState extends State<OrdersCard> {
         var otherUser = userSnapshot.data!;
         return Container(
           padding: EdgeInsets.all(8),
-          height: 120,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.grey.withOpacity(0.3)

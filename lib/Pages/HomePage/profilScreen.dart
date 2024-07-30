@@ -12,10 +12,18 @@ import '../ProfilePageScreens/MyOrdersPage.dart';
 import '../Widgets/colors.dart';
 import '../Widgets/profile_info_tabs_widget.dart';
 import '../Widgets/profile_text_widgets.dart';
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final PickImage _pickImage=PickImage();
+
   final userController = Get.find<UserStateController>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +64,9 @@ class ProfileScreen extends StatelessWidget {
                               right: -5,
                               child: IconButton(onPressed: (){
                                 _pickImage.pickImage(ImageSource.gallery,userController.currentser.value);
+                                setState(() {
 
+                                });
                               },
                                 icon: Icon(Icons.photo_camera),
                               ),
@@ -134,5 +144,4 @@ class ProfileScreen extends StatelessWidget {
       ],
     );
   }
-
 }

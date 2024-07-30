@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
+import 'package:planet_saver/FireBase/ads_storage.dart';
 
 import '../../Controllers/user_statemanager.dart';
 import '../../FireBase/ChatsFireBase.dart';
@@ -110,8 +111,9 @@ class PickUpDescriptionPage extends StatelessWidget {
                                   actions: <Widget>[
                                     TextButton(
                                       child: Text('OK'),
-                                      onPressed: () {
+                                      onPressed: () async{
                                         ordersFireBase.saveOrder(product.tittle, product.price,"", "",product.uid,user.currentser.value!.uid,false,true);
+                                        await AdsCloudFireStore().updateDisposalStatus(product.uid);
                                         Navigator.of(context).pop();
                                       },
                                     ),
