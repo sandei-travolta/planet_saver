@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Product> filteredproduct;
   late List<Product> filteredDisposal;
   void getProducts()async{
-    products=await adsController.fetchProducts();
-    disposals=await adsController.fetchDisposals();
+    products=await adsController.fetchProducts(stateController.currentser.value!.uid);
+    disposals=await adsController.fetchDisposals(stateController.currentser.value!.uid);
     stateController.setProducts(products);
     stateController.setDisposals(disposals);
   }

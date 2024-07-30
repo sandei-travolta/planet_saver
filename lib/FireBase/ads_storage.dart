@@ -42,11 +42,11 @@ class AdsCloudFireStore{
       return true;
     return false;
   }
-  Future<List<Product>> fetchProducts() async {
+  Future<List<Product>> fetchProducts(String uid) async {
     List<Product> products = [];
 
     try {
-      QuerySnapshot querySnapshot = await _firebaseFirestore.get();
+      QuerySnapshot querySnapshot = await _firebaseFirestore.where('uid',isNotEqualTo: uid).get();
 
       for (var doc in querySnapshot.docs) {
         Product product = Product.fromSnap(doc);
@@ -73,10 +73,10 @@ class AdsCloudFireStore{
 
     return products;
   }
-  Future<List<Product>> fetchDisposals()async{
+  Future<List<Product>> fetchDisposals(String uid)async{
     List<Product> disposals=[];
     try{
-      QuerySnapshot querySnapshot=await _disposalCollection.get();
+      QuerySnapshot querySnapshot=await _disposalCollection.where('uid',isNotEqualTo: uid).get();
       for(var doc in querySnapshot.docs){
         Product product=Product.fromSnap(doc);
         disposals.add(product);
