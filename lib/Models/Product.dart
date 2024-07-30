@@ -2,15 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product{
   final String tittle;
-  ///Convert to list
   final List<String> url;
   final String uid;
+  final String productId;
   final String description;
   final int price;
   final int weight;
   final String category;
   final String region;
-  Product({required this.description,required this.tittle, required this.url, required this.price, required this.weight, required this.uid,required this.category,required this.region});
+  final bool status;
+  Product({required this.description,required this.tittle, required this.url, required this.price, required this.weight, required this.uid,required this.category,required this.region,required this.status,required this.productId});
   Map<String,dynamic> toJson()=>{
     "tittle":tittle,
     "url":url,
@@ -19,7 +20,9 @@ class Product{
     "weight":weight,
     "uid":uid,
     "category":category,
-    "region":region
+    "region":region,
+    "status":status,
+    "productId":productId
   };
   static Product fromSnap(DocumentSnapshot snapshot){
     var snap=snapshot.data() as Map<String,dynamic>;
@@ -31,7 +34,9 @@ class Product{
         weight:snap['weight'],
         uid:snap['uid'],
         category: snap['category'],
-        region: snap['region']
+        region: snap['region'],
+        status: snap['status'],
+        productId: snap['productId']
     );
   }
 }

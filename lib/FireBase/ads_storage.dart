@@ -18,7 +18,9 @@ class AdsCloudFireStore{
         weight: weight,
         uid: uid,
         category: category,
-        region: region
+        region: region,
+        status: false,
+        productId: idGenerator()
     );
     await _firebaseFirestore.doc().set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)
@@ -35,7 +37,9 @@ class AdsCloudFireStore{
         weight: weight,
         uid: uid,
         category: category,
-        region: region
+        region: region,
+        status: false,
+        productId: idGenerator()
     );
     await _disposalCollection.doc().set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)
@@ -87,4 +91,27 @@ class AdsCloudFireStore{
     print("done");
     return disposals;
   }
+  Future<bool> deleteAd(String uid)async{
+    try{
+      await _firebaseFirestore.doc(uid).delete();
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+  Future<bool> deleteDisposal(String uid)async{
+    try{
+      await _disposalCollection.doc(uid).delete();
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+  Future<bool> updatproductStatus()async{
+    return false;
+  }
+}
+String idGenerator() {
+  final now = DateTime.now();
+  return now.microsecondsSinceEpoch.toString();
 }
