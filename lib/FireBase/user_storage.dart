@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:planet_saver/Controllers/user_controller.dart';
 import 'package:planet_saver/Models/user_model.dart';
 
 class UserStorage{
@@ -23,11 +24,12 @@ class UserStorage{
     await firebaseFirestore.doc(uid).update({"imgUrl":imgUrl});
   }
   Future<bool> updateUserPofile(String name,String mobileNo,String role,String uid)async{
+    int mobileNoInt =UserController().formatMobileNumber(mobileNo);
     try{
       await firebaseFirestore.doc(uid).update({
         "name":name,
-        "mobileNo":mobileNo,
-        "role":role
+        "mobileNo":mobileNoInt,
+        /*"role"role*/
       });
       return true;
     }catch(e){
@@ -36,5 +38,10 @@ class UserStorage{
   }
 }
 /*
-- set rle selection on registration
+TO-DO List
+- set role selection on registration
+- set/remove sell button based on role
+- fix issue on dates on orders
+- finish the update profile section
+- get paid
  */

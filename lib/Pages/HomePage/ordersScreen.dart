@@ -26,7 +26,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);

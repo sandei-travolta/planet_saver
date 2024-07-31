@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:planet_saver/Controllers/image_picker.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
+import 'package:planet_saver/FireBase/user_storage.dart';
 import 'package:planet_saver/Pages/ProfilePageScreens/myAdsPage.dart';
 import 'package:planet_saver/Pages/ProfilePageScreens/walletPage.dart';
 
@@ -124,8 +125,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             actions: <Widget>[
                               TextButton(
+                                child: Text('Cancle'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
                                 child: Text('OK'),
                                 onPressed: () {
+                                  UserStorage().updateUserPofile(nameController.text,mobileNoConntroller.text,"",userController.currentser.value!.uid);
                                   Navigator.of(context).pop();
                                 },
                               ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/FireBase/ads_storage.dart';
 
@@ -14,6 +15,8 @@ class PickUpDescriptionPage extends StatelessWidget {
   final MessagingService messagingService=MessagingService();
   final user=Get.find<UserStateController>();
   final OrdersFireBase ordersFireBase=OrdersFireBase();
+  TextEditingController dateController=TextEditingController();
+  String datePlaced=DateFormat("dd-MM-yyyy").format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,12 +110,40 @@ class PickUpDescriptionPage extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: Text('Accept Order'),
-                                  content: Text(product.tittle),
+                                  content: Container(
+                                    height: 200,
+                                      child: Column(
+                                        children: [
+                                          Text(product.tittle),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                            child: TextField(
+                                              readOnly: true,
+                                              controller: dateController,
+                                              decoration: InputDecoration(
+                                                  hintText: "Pick Up Date"
+                                              ),
+                                              onTap: ()async{
+                                                DateTime? pickedDate=await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2025)
+                                                );
+                                                if(pickedDate!=null){
+                                                  String formattedDate=DateFormat("dd-MM-yyyy").format(pickedDate);
+                                                  dateController.text=formattedDate;
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                   actions: <Widget>[
                                     TextButton(
                                       child: Text('OK'),
                                       onPressed: () async{
-                                        ordersFireBase.saveOrder(product.tittle, product.price,"", "",product.uid,user.currentser.value!.uid,false,true);
+                                        ordersFireBase.saveOrder(product.tittle, product.price,dateController.text,datePlaced,product.uid,user.currentser.value!.uid,false,true);
                                         await AdsCloudFireStore().updateDisposalStatus(product.uid);
                                         Navigator.of(context).pop();
                                       },

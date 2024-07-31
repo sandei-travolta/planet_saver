@@ -59,7 +59,7 @@ class OrdersFireBase{
   Future<List<OrderModel>> getDaysOrders(String uid,String date)async{
     List<OrderModel> orders=[];
     try{
-      QuerySnapshot querySnapshot=await db.collection("Users").doc(uid).collection("Orders").where('OrderDate',isEqualTo: date).get();
+      QuerySnapshot querySnapshot=await db.collection("Orders").where('OrderDate',isEqualTo: date).where(Filter.or(Filter("SellerId",isEqualTo:uid),Filter("BuyerId",isEqualTo:uid))).get();
       for(var doc in querySnapshot.docs){
         OrderModel order=OrderModel.fromSnap(doc);
         orders.add(order);

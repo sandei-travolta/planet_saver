@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passWordController=TextEditingController();
   TextEditingController confirmPassWordController=TextEditingController();
+
   int _currentPage=0;
   bool isLoading=false;
   @override

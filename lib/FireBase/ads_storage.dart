@@ -50,8 +50,7 @@ class AdsCloudFireStore{
     List<Product> products = [];
 
     try {
-      QuerySnapshot querySnapshot = await _firebaseFirestore.where('uid',isNotEqualTo: uid).get();
-
+      QuerySnapshot querySnapshot = await _firebaseFirestore.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isNotEqualTo: true))).get();
       for (var doc in querySnapshot.docs) {
         Product product = Product.fromSnap(doc);
         products.add(product);
@@ -80,7 +79,7 @@ class AdsCloudFireStore{
   Future<List<Product>> fetchDisposals(String uid)async{
     List<Product> disposals=[];
     try{
-      QuerySnapshot querySnapshot=await _disposalCollection.where('uid',isNotEqualTo: uid).get();
+      QuerySnapshot querySnapshot=await _disposalCollection.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isNotEqualTo:true))).get();
       for(var doc in querySnapshot.docs){
         Product product=Product.fromSnap(doc);
         disposals.add(product);

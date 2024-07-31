@@ -280,7 +280,7 @@ class DescriptionPage extends StatelessWidget {
                               TextEditingController townController=TextEditingController();
                               TextEditingController mobileNoController=TextEditingController();
                               TextEditingController dateController=TextEditingController();
-                              String datePlaced="";
+                              String datePlaced=DateFormat("dd-MM-yyyy").format(DateTime.now());
                               nameConroller.text=user.currentser.value!.name;
                               mobileNoController.text=user.currentser.value!.mobileNo.toString();
                               return Container(
