@@ -362,7 +362,7 @@ class DescriptionPage extends StatelessWidget {
                                           TransactionHistory transactionHistory=TransactionHistory();
                                           PaymentResponse? paymentResponse= await paymentController.iniatePayment(
                                               user.currentser.value!.uid,
-                                              1,
+                                              product.price,
                                               mobileNoController.text.toString()
                                           );
                                           if(paymentResponse==null){
@@ -377,11 +377,13 @@ class DescriptionPage extends StatelessWidget {
                                               ordersFireBase.saveOrder(product.tittle, product.price, dateController.text, datePlaced, user.currentser.value!.uid,product.uid, false,false);
                                               transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,datePlaced,product.price,user.currentser.value!.uid,product.uid,false,user.currentser.value!.uid);
                                               await AdsCloudFireStore().updatproductStatus(product.productId);
+                                              Navigator.of(context).pop();
                                               print("Saved");
                                               successCustomSnackBar("😎😎😎",context);
                                             }
                                             else{
                                               print("payment status $paymentStatus");
+                                              Navigator.of(context).pop();
                                               customSnackBar("Tafuta Pesa😂😂😂", context);
                                             }
                                           }

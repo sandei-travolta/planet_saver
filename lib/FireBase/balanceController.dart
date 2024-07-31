@@ -28,7 +28,9 @@ class BalanceController{
   }
   void updateBalance(String uid,int amount)async{
     BalanceModel? balanceModel=await fetchBalance(uid);
+    print(balanceModel!.amount);
     int newBalance=balanceModel!.amount!+amount;
+    print(newBalance);
     ///Update Balance
     QuerySnapshot<Map<String,dynamic>> balanceDoc=await firebaseFirestore
         .collection("Users")
@@ -40,7 +42,7 @@ class BalanceController{
           .doc(uid)
           .collection("Balance")
           .doc(uid+"Balance")
-          .update({"Ämount":newBalance});
+          .update({"Balance":newBalance});
     }
     else{
       firebaseFirestore

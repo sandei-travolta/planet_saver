@@ -25,9 +25,6 @@ class _WalletPageState extends State<WalletPage> {
     super.initState();
     getBalance();
     getTransactions();
-    setState(() {
-
-    });
   }
   void getBalance()async{
     BalanceModel? balanceModel=await balanceController.fetchBalance(user!.uid);
@@ -35,6 +32,9 @@ class _WalletPageState extends State<WalletPage> {
   }
   void getTransactions()async{
     transactions=await transactionHistory.getTransactions(user!.uid);
+    setState(() {
+
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -140,7 +140,7 @@ class _WalletPageState extends State<WalletPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Colors.grey
+                          color: Colors.blueAccent
                         ),
                         child: ListTile(
                           leading: Text("Date: ${transaction.date}"),

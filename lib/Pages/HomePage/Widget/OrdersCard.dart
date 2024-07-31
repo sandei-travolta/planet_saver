@@ -3,7 +3,6 @@ import 'package:planet_saver/Controllers/paymentController.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/FireBase/TransactionsHistory.dart';
 import 'package:planet_saver/FireBase/balanceController.dart';
-import 'package:planet_saver/Models/Product.dart';
 import 'package:planet_saver/Models/orderModel.dart';
 
 import '../../../Controllers/user_controller.dart';
@@ -54,6 +53,7 @@ class _OrdersCardState extends State<OrdersCard> {
         }
         var otherUser = userSnapshot.data!;
         return Container(
+          height: 120,
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
