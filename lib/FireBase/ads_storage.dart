@@ -11,7 +11,9 @@ class AdsCloudFireStore{
   Future<bool> saveAd(String description,String tittle,List<File> files,int price,int weight,String uid,String category,String region)async{
     bool isSaved=false;
     List<String> urls=await pickImage.saveImages(files, uid);
-    Product product=Product(description: description,
+    String _productId=idGenerator();
+    Product product=Product(
+        description: description,
         tittle: tittle,
         url: urls,
         price: price,
@@ -20,9 +22,9 @@ class AdsCloudFireStore{
         category: category,
         region: region,
         status: false,
-        productId: idGenerator()
+        productId: _productId,
     );
-    await _firebaseFirestore.doc().set(product.toJson()).then((bool) => isSaved=true);
+    await _firebaseFirestore.doc(_productId).set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)
       return true;
     return false;
@@ -30,6 +32,7 @@ class AdsCloudFireStore{
   Future<bool> saveDisposalAd(String description,String tittle,List<File> files,int price,int weight,String uid,String category,String region)async{
     bool isSaved=false;
     List<String> urls=await pickImage.saveImages(files, uid);
+    String _productId=idGenerator();
     Product product=Product(description: description,
         tittle: tittle,
         url: urls,
@@ -39,9 +42,9 @@ class AdsCloudFireStore{
         category: category,
         region: region,
         status: false,
-        productId: idGenerator()
+        productId: _productId
     );
-    await _disposalCollection.doc().set(product.toJson()).then((bool) => isSaved=true);
+    await _disposalCollection.doc(_productId).set(product.toJson()).then((bool) => isSaved=true);
     if(isSaved)
       return true;
     return false;
@@ -50,7 +53,7 @@ class AdsCloudFireStore{
     List<Product> products = [];
 
     try {
-      QuerySnapshot querySnapshot = await _firebaseFirestore.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isNotEqualTo: true))).get();
+      QuerySnapshot querySnapshot = await _firebaseFirestore.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isEqualTo: false))).get();
       for (var doc in querySnapshot.docs) {
         Product product = Product.fromSnap(doc);
         products.add(product);
@@ -79,7 +82,7 @@ class AdsCloudFireStore{
   Future<List<Product>> fetchDisposals(String uid)async{
     List<Product> disposals=[];
     try{
-      QuerySnapshot querySnapshot=await _disposalCollection.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isNotEqualTo:true))).get();
+      QuerySnapshot querySnapshot=await _disposalCollection.where(Filter.and(Filter("uid",isNotEqualTo: uid),Filter("status",isEqualTo:false))).get();
       for(var doc in querySnapshot.docs){
         Product product=Product.fromSnap(doc);
         disposals.add(product);
@@ -95,6 +98,7 @@ class AdsCloudFireStore{
       await _firebaseFirestore.doc(uid).delete();
       return true;
     }catch(e){
+      print(e);
       return false;
     }
   }
