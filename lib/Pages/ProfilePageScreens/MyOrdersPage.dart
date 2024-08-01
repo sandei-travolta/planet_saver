@@ -62,7 +62,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       OrderModel orderModel=orders[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
-                        child: OrdersCard(orderModel: orderModel,currentUser: user.currentser.value),
+                        child: OrdersCard(orderModel: orderModel,currentUser: user.currentser.value,refreshOrders: fetchOrders,),
                       );
                     }),
               ))

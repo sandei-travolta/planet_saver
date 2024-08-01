@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:planet_saver/Controllers/paymentController.dart';
 import 'package:planet_saver/FireBase/OrdersFirebase.dart';
 import 'package:planet_saver/FireBase/TransactionsHistory.dart';
@@ -13,10 +14,12 @@ class OrdersCard extends StatefulWidget {
   const OrdersCard({
     super.key,
     required this.orderModel,
-    required this.currentUser
+    required this.currentUser,
+    required this.refreshOrders
   });
   final OrderModel orderModel;
   final UserModel? currentUser;
+  final VoidCallback refreshOrders;
   @override
   State<OrdersCard> createState() => _OrdersCardState();
 }
@@ -27,6 +30,7 @@ class _OrdersCardState extends State<OrdersCard> {
   BalanceController balanceController=BalanceController();
   TextEditingController mobileNoController=TextEditingController();
   PaymentController paymentController=PaymentController();
+  String currentDate=DateFormat("dd-MM-yyyy").format(DateTime.now());
   Future<UserModel?> _returnUser(String id) async {
     UserController userController = UserController();
     UserModel? userModel = await userController.getCurrentUser(id);
@@ -154,10 +158,11 @@ class _OrdersCardState extends State<OrdersCard> {
                                     if(paymentStatus){
                                       OrderModel product=widget.orderModel;
                                       print("payment status $paymentStatus");
-                                      transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,"current-Date",product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.orderModel.sellerId);
+                                      transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,currentDate,product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.orderModel.sellerId);
                                       bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
                                       balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
-                                      transactionHistory.saveTransaction(widget.orderModel.orderId,"current-Date", widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
+                                      transactionHistory.saveTransaction(widget.orderModel.orderId,currentDate, widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
+                                      widget.refreshOrders;
                                       print("Saved");
                                       successCustomSnackBar("😎😎😎",context);
                                     }
@@ -182,11 +187,9 @@ class _OrdersCardState extends State<OrdersCard> {
                           ()async{
                         bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
                         balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
-                        transactionHistory.saveTransaction(widget.orderModel.orderId,"current-Date", widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
+                        transactionHistory.saveTransaction(widget.orderModel.orderId,currentDate, widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
                         print(updated);
-                        setState(() {
-
-                        });
+                        widget.refreshOrders;
                       },
                       child: Container(
                         decoration: BoxDecoration(

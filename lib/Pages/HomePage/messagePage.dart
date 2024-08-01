@@ -164,6 +164,7 @@ class _MessageScreenState extends State<MessageScreen> {
       fontSize: 15,
       color: Color(0xFF959FA8),
       fontFamily: "Poppins-semiBold",
+      overflow:TextOverflow.ellipsis
     ),);
   }
 }
