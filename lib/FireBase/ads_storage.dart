@@ -79,6 +79,22 @@ class AdsCloudFireStore{
 
     return products;
   }
+  Future<List<Product>> fetchUsersDisposal(String uid) async {
+    List<Product> products = [];
+
+    try {
+      QuerySnapshot querySnapshot = await _disposalCollection.where('uid',isEqualTo: uid).get();
+
+      for (var doc in querySnapshot.docs) {
+        Product product = Product.fromSnap(doc);
+        products.add(product);
+      }
+    } catch (e) {
+      print('Error fetching products: $e');
+    }
+
+    return products;
+  }
   Future<List<Product>> fetchDisposals(String uid)async{
     List<Product> disposals=[];
     try{

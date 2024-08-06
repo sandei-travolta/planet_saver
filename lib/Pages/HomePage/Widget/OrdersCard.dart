@@ -161,7 +161,7 @@ class _OrdersCardState extends State<OrdersCard> {
                                       transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,currentDate,product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.orderModel.sellerId);
                                       bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
                                       balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
-                                      transactionHistory.saveTransaction(widget.orderModel.orderId,currentDate, widget.orderModel.orderPrice,widget.orderModel.buyerId, widget.orderModel.sellerId, true,widget.orderModel.sellerId);
+                                      transactionHistory.saveTransaction(widget.orderModel.orderId,currentDate, widget.orderModel.orderPrice,widget.orderModel.sellerId, widget.orderModel.buyerId, true,widget.orderModel.sellerId);
                                       widget.refreshOrders;
                                       print("Saved");
                                       successCustomSnackBar("😎😎😎",context);

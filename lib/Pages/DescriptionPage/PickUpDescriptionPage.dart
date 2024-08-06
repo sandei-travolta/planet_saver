@@ -144,7 +144,7 @@ class PickUpDescriptionPage extends StatelessWidget {
                                       child: Text('OK'),
                                       onPressed: () async{
                                         ordersFireBase.saveOrder(product.tittle, product.price,dateController.text,datePlaced,product.uid,user.currentser.value!.uid,false,true);
-                                        await AdsCloudFireStore().updateDisposalStatus(product.uid);
+                                        await AdsCloudFireStore().updateDisposalStatus(product.productId);
                                         Navigator.of(context).pop();
                                       },
                                     ),

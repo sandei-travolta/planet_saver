@@ -15,11 +15,13 @@ class MyAdsPage extends StatefulWidget {
 
 class _MyAdsPageState extends State<MyAdsPage> {
   List<Product> myads=[];
-  final user=Get.find<UserStateController>();
+  List<Product> myDisposals=[];
+  final userId=Get.find<UserStateController>().currentser.value!.uid;
   final AdsCloudFireStore adsController=AdsCloudFireStore();
   void fetchAds()async{
     print("Getting");
-    myads=await adsController.fetchUsersAds(user.currentser.value!.uid);
+    myads=await adsController.fetchUsersAds(userId);
+    myDisposals=await adsController.fetchDisposals(userId);
     setState(() {
     });
   }
@@ -28,6 +30,7 @@ class _MyAdsPageState extends State<MyAdsPage> {
     super.initState();
     fetchAds();
   }
+  int currentIndex=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,12 +52,77 @@ class _MyAdsPageState extends State<MyAdsPage> {
                 )
             ),
             Expanded(
+                ////flex: 1,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            currentIndex=0;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: currentIndex==0?Colors.green:Colors.white,
+                            border: currentIndex==0?Border.all():Border.all(
+                              width: 2,
+                              color: Colors.black
+                            )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 40),
+                            child: Center(
+                              child: Text("Selling",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800
+                                ),),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            currentIndex=1;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: currentIndex==1?Colors.green:Colors.white,
+                              border: currentIndex==1?Border.all():Border.all(
+                                  width: 2,
+                                  color: Colors.black
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 40),
+                            child: Center(
+                              child: Text("Disposals",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800
+                                ),),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+            ),
+            Expanded(
               flex: 14,
                 child: Container(
                   child: ListView.builder(
-                      itemCount: myads.length,
+                      itemCount: currentIndex==0?myads.length:myDisposals.length,
                       itemBuilder: (context,index){
-                        Product product=myads[index];
+                        Product product=currentIndex==0?myads[index]:myDisposals[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
