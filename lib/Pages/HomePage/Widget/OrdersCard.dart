@@ -145,7 +145,7 @@ class _OrdersCardState extends State<OrdersCard> {
                                 onPressed: () async {
                                   PaymentResponse? paymentResponse= await paymentController.iniatePayment(
                                       widget.currentUser!.uid,
-                                      1,
+                                      widget.orderModel.orderPrice,
                                       mobileNoController.text.toString()
                                   );
                                   if(paymentResponse==null){
