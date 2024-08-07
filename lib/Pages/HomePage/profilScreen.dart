@@ -1,11 +1,16 @@
+
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:planet_saver/Controllers/image_picker.dart';
+import 'package:planet_saver/Controllers/user_controller.dart';
 import 'package:planet_saver/Controllers/user_statemanager.dart';
 import 'package:planet_saver/FireBase/user_storage.dart';
+import 'package:planet_saver/Models/user_model.dart';
 import 'package:planet_saver/Pages/ProfilePageScreens/myAdsPage.dart';
 import 'package:planet_saver/Pages/ProfilePageScreens/walletPage.dart';
 
@@ -132,8 +137,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               TextButton(
                                 child: Text('OK'),
-                                onPressed: () {
+                                onPressed: ()async{
                                   UserStorage().updateUserPofile(nameController.text,mobileNoConntroller.text,"",userController.currentser.value!.uid);
+                                  UserModel? currentUser = await UserController().getCurrentUser(FirebaseAuth.instance.currentUser!.uid);
+                                  await userController.setCur(currentUser!);
                                   Navigator.of(context).pop();
                                 },
                               ),
