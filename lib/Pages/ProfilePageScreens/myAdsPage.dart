@@ -77,10 +77,11 @@ class _MyAdsPageState extends State<MyAdsPage> {
                             padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 40),
                             child: Center(
                               child: Text("Selling",
-                                style: TextStyle(
+                                /*style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w800
-                                ),),
+                                ),*/
+                              ),
                             ),
                           ),
                         ),
@@ -104,10 +105,11 @@ class _MyAdsPageState extends State<MyAdsPage> {
                             padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 40),
                             child: Center(
                               child: Text("Disposals",
-                                style: TextStyle(
+                                /*style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w800
-                                ),),
+                                ),*/
+                              ),
                             ),
                           ),
                         ),
