@@ -136,9 +136,11 @@ class AdsCloudFireStore{
   }
   Future<bool> updateDisposalStatus(String uid)async{
     try{
-      await _disposalCollection.doc(uid).update({"Status":true});
+      await _disposalCollection.doc(uid).update({"status":true});
+      print("updated: ${uid}");
       return true;
     }catch(e){
+      print("notUpdated: ${e} : ${uid}");
       return false;
     }
   }

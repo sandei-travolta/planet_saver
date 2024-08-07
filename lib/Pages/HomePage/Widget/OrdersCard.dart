@@ -145,7 +145,7 @@ class _OrdersCardState extends State<OrdersCard> {
                                 onPressed: () async {
                                   PaymentResponse? paymentResponse= await paymentController.iniatePayment(
                                       widget.currentUser!.uid,
-                                      widget.orderModel.orderPrice,
+                                      1,
                                       mobileNoController.text.toString()
                                   );
                                   if(paymentResponse==null){
@@ -158,9 +158,11 @@ class _OrdersCardState extends State<OrdersCard> {
                                     if(paymentStatus){
                                       OrderModel product=widget.orderModel;
                                       print("payment status $paymentStatus");
-                                      transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,currentDate,product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.orderModel.sellerId);
+                                      ///save transaction to person sending
+                                      transactionHistory.saveTransaction(paymentResponse.checkoutRequestId,currentDate,product.orderPrice,widget.currentUser!.uid,product.sellerId,false,widget.currentUser!.uid);
                                       bool updated=await ordersFireBase.markOrderComplete(widget.orderModel.orderId);
                                       balanceController.updateBalance(widget.orderModel.sellerId, widget.orderModel.orderPrice);
+                                      ///save transaction to person receiving
                                       transactionHistory.saveTransaction(widget.orderModel.orderId,currentDate, widget.orderModel.orderPrice,widget.orderModel.sellerId, widget.orderModel.buyerId, true,widget.orderModel.sellerId);
                                       widget.refreshOrders;
                                       print("Saved");

@@ -49,9 +49,13 @@ class AdCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(product.tittle,style: TextStyle(
-                        fontSize: 18
-                    ),
+                    Container(
+                      width: 100,
+                      child: Text(product.tittle,style: TextStyle(
+                          fontSize: 18,
+                          overflow: TextOverflow.ellipsis
+                      ),
+                      ),
                     ),
                     Text("${product.price} Ksh")
                   ],

@@ -21,7 +21,7 @@ class _MyAdsPageState extends State<MyAdsPage> {
   void fetchAds()async{
     print("Getting");
     myads=await adsController.fetchUsersAds(userId);
-    myDisposals=await adsController.fetchDisposals(userId);
+    myDisposals=await adsController.fetchUsersDisposal(userId);
     setState(() {
     });
   }
@@ -187,7 +187,9 @@ class _MyAdsPageState extends State<MyAdsPage> {
                                     ),
                                   )),
                               IconButton(onPressed: () async {
-                                bool deleted=await adsController.deleteAd(product.productId);
+                                bool deleted=currentIndex==0?await adsController.deleteAd(product.productId)
+                                :
+                                await adsController.deleteDisposal(product.productId);
                                 fetchAds();
                               }, icon: Icon(Icons.delete))
                             ],
